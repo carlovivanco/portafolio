@@ -3,94 +3,52 @@
 import { Github, Mail, Linkedin, MapPin, Phone } from 'lucide-react'
 
 const links = [
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'carlo292002@gmail.com',
-    href: 'mailto:carlo292002@gmail.com',
-  },
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    value: 'carlofelipevivancocoronado',
-    href: 'https://linkedin.com/in/carlofelipevivancocoronado',
-  },
-  {
-    icon: Github,
-    label: 'GitHub',
-    value: '@carlovivanco',
-    href: 'https://github.com/carlovivanco',
-  },
-  {
-    icon: Phone,
-    label: 'Phone',
-    value: '+52 55 1959 0789',
-    href: 'tel:+525519590789',
-  },
-  {
-    icon: MapPin,
-    label: 'Location',
-    value: 'Mexico City · Open to relocate',
-    href: null,
-  },
+  { icon: Mail, label: 'Email', value: 'carlo292002@gmail.com', href: 'mailto:carlo292002@gmail.com' },
+  { icon: Linkedin, label: 'LinkedIn', value: 'carlofelipevivancocoronado', href: 'https://linkedin.com/in/carlofelipevivancocoronado' },
+  { icon: Github, label: 'GitHub', value: 'carlovivanco', href: 'https://github.com/carlovivanco' },
+  { icon: Phone, label: 'Phone', value: '+52 55 1959 0789', href: 'tel:+525519590789' },
+  { icon: MapPin, label: 'Location', value: 'Mexico City · Open to relocate', href: null },
 ]
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-6">
-      <div className="max-w-3xl mx-auto text-center">
-        <p className="section-label mb-3">Say hello</p>
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">
-          Let's build something
-          <span className="text-blue-400"> great together</span>
-        </h2>
-        <p className="text-slate-400 text-lg max-w-xl mx-auto mb-12 leading-relaxed">
-          Always open to discussing new opportunities, interesting engineering challenges, or just
-          connecting with builders and innovators around the world.
-        </p>
+    <section id="contact" className="py-24 px-6 border-t border-[#1a2332]">
+      <div className="max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
+          {/* Left label */}
+          <div className="md:col-span-3">
+            <p className="section-label mt-1">Contact</p>
+          </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <a
-            href="mailto:carlo292002@gmail.com"
-            className="w-full sm:w-auto px-8 py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-medium transition-all duration-200 shadow-lg shadow-blue-600/20 hover:shadow-blue-500/30"
-          >
-            Send me an email
-          </a>
-          <a
-            href="https://linkedin.com/in/carlofelipevivancocoronado"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full sm:w-auto px-8 py-3.5 border border-[#1e2d3d] hover:border-blue-500/50 text-slate-300 hover:text-white rounded-xl font-medium transition-all duration-200 flex items-center justify-center gap-2"
-          >
-            <Linkedin size={16} />
-            Connect on LinkedIn
-          </a>
-        </div>
+          {/* Right content */}
+          <div className="md:col-span-9">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+              Let's work together.
+            </h2>
+            <p className="text-slate-400 text-base leading-relaxed mb-12 max-w-lg">
+              Always open to discussing new opportunities, engineering challenges,
+              or connecting with builders and teams doing meaningful work.
+            </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {links.map(({ icon: Icon, label, value, href }) => {
-            const content = (
-              <div className="card rounded-xl p-5 flex flex-col items-center gap-2 group">
-                <Icon size={18} className="text-slate-500 group-hover:text-blue-400 transition-colors" />
-                <div>
-                  <div className="text-xs text-slate-600 font-mono mb-0.5">{label}</div>
-                  <div className="text-sm text-slate-300 break-all">{value}</div>
-                </div>
-              </div>
-            )
-            return href ? (
-              <a
-                key={label}
-                href={href}
-                target={href.startsWith('http') ? '_blank' : undefined}
-                rel="noopener noreferrer"
-              >
-                {content}
-              </a>
-            ) : (
-              <div key={label}>{content}</div>
-            )
-          })}
+            <div className="space-y-0">
+              {links.map(({ icon: Icon, label, value, href }) => {
+                const inner = (
+                  <div className="flex items-center gap-5 py-4 border-b border-[#1a2332] group">
+                    <Icon size={15} className="text-slate-600 group-hover:text-blue-400 transition-colors flex-shrink-0" />
+                    <span className="text-xs font-mono text-slate-600 w-20 flex-shrink-0 uppercase tracking-widest">{label}</span>
+                    <span className="text-sm text-slate-300 group-hover:text-white transition-colors">{value}</span>
+                  </div>
+                )
+                return href ? (
+                  <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+                    {inner}
+                  </a>
+                ) : (
+                  <div key={label}>{inner}</div>
+                )
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </section>
