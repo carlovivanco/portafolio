@@ -2,65 +2,73 @@
 
 const experiences = [
   {
+    role: 'AI Automation Engineer',
+    company: 'Nexxia',
+    period: 'Feb 2026 – Present',
+    location: 'Mexico City, Mexico · Full-Time, On-Site',
+    current: true,
+    color: '#8b5cf6',
+    bullets: [
+      'Leading full-stack development of an enterprise AI platform on GCP with professional software architecture, security-hardened infrastructure, and production-grade CI/CD deployment pipelines.',
+      'Designing and deploying modular multi-agent AI frameworks using Vertex AI Agent Builder and LangGraph, with hybrid RAG pipelines and MCP server integrations enabling specialized tool access per agent across complex, multi-step automated business workflows.',
+      'Architecting scalable agentic automation pipelines that replace manual operational processes end-to-end, leveraging Cloud Run and event-driven orchestration for intelligent, low-latency automation across cross-functional business units.',
+    ],
+    tags: ['GCP', 'Vertex AI', 'LangGraph', 'RAG', 'Multi-Agent', 'Cloud Run', 'CI/CD', 'Python'],
+  },
+  {
     role: 'Software Engineering Manufacturing Test Intern',
     company: 'Tesla',
-    period: 'Aug 2025 – Present',
-    location: 'United States',
-    current: true,
-    logo: '⚡',
+    period: 'Aug 2025 – Dec 2025',
+    location: 'Palo Alto, California, USA · On-Site',
+    current: false,
     color: '#e11d48',
     bullets: [
-      'Developing and maintaining manufacturing test software for production validation systems',
-      'Working with Python and automation frameworks to ensure hardware/software reliability at scale',
-      'Collaborating with cross-functional teams across manufacturing and software engineering',
-      'Contributing to tooling that directly impacts vehicle production quality and throughput',
+      'Designed software tools and automation frameworks for high-voltage battery validation, enabling seamless communication between testing equipment and vehicle ECUs using Go, C++, and Python.',
+      'Built integrated test solutions with cross-functional teams, analyzing electronic schematics and CAN/UDS networks to deliver embedded test software and complete, modular HV battery test platforms from concept to commissioning.',
+      'Developed and deployed custom test equipment and communication software, creating automated ECU code generation tools that cut test software development time by 25% per firmware release.',
     ],
-    tags: ['Python', 'Manufacturing Test', 'Automation', 'Hardware Validation'],
+    tags: ['Go', 'C++', 'Python', 'CAN/UDS', 'HV Battery', 'ECU', 'Embedded Systems'],
   },
   {
     role: 'Software Integration Automation Trainee',
     company: 'Ford Motor Company',
-    period: 'Jun 2024',
-    location: 'Mexico',
-    logo: '🔵',
+    period: 'Jun 2024 – Sep 2024',
+    location: 'Mexico City, Mexico',
+    current: false,
     color: '#3b82f6',
     bullets: [
-      'Automated integration workflows for vehicle feature systems, reducing manual testing cycles',
-      'Worked with Vector CANalyzer for CAN bus analysis and validation',
-      'Implemented test scripts in Python for ECU integration and communication verification',
-      'Collaborated with global engineering teams across US and Mexico sites',
+      'Developed and maintained automated validation frameworks for SIL, HIL, and MIL testing environments using Python, TestStand, LabVIEW, and PyTest; managed version control and CI/CD pipelines in GitHub.',
+      'Integrated automated testing pipelines with CAN, LIN, SomeIP, and Break-Out Box (BOB) protocols, enabling seamless interaction with test hardware and accurate system-level validation.',
+      'Debugged and resolved software defects during test development, improving robustness, traceability, and reliability of automation workflows across integration stages.',
     ],
-    tags: ['Python', 'Vector CANalyzer', 'CAN Bus', 'ECU Testing', 'Automation'],
+    tags: ['Python', 'TestStand', 'LabVIEW', 'PyTest', 'CAN/LIN/SomeIP', 'SIL/HIL/MIL', 'CI/CD'],
   },
   {
     role: 'Feature Systems Engineering Trainee',
     company: 'Ford Motor Company',
-    period: 'Jun 2023',
-    location: 'Mexico',
-    logo: '🔵',
+    period: 'Jun 2023 – Jun 2024',
+    location: 'Mexico City, Mexico',
+    current: false,
     color: '#3b82f6',
     bullets: [
-      'Supported feature validation for embedded vehicle systems and control units',
-      'Performed signal analysis using oscilloscopes and signal generators',
-      'Documented test procedures and defect reports in JIRA',
-      'Assisted in root cause analysis for system-level anomalies',
+      'Designed digital twins in MATLAB/Simulink with state machine–based control system simulations to model and validate vehicle features such as Trailer Brake Control.',
+      'Simulated complete system behavior including module interactions and CAN signals to verify functional requirements and optimize control logic prior to hardware integration.',
+      'Designed breadboard and on-vehicle automation testing with cross-functional teams, reducing system validation time by 50% and earning the High Achiever Badge in Ford\'s Intern City of Tomorrow Challenge.',
     ],
-    tags: ['Embedded Systems', 'JIRA', 'Oscilloscope', 'Signal Analysis'],
+    tags: ['MATLAB', 'Simulink', 'Digital Twins', 'CAN', 'Control Systems', 'State Machine'],
   },
   {
     role: 'Electrical Quality Engineering Intern',
-    company: 'Ford Motor Company',
-    period: 'Jan 2023',
-    location: 'Mexico',
-    logo: '🔵',
-    color: '#3b82f6',
+    company: 'Stellantis',
+    period: 'Jan 2023 – Jun 2023',
+    location: 'Mexico City, Mexico',
+    current: false,
+    color: '#f59e0b',
     bullets: [
-      'Supported electrical quality assurance processes on the production line',
-      'Used Minitab for statistical process control and quality data analysis',
-      'Identified and tracked electrical defects using standardized quality frameworks',
-      'Contributed to continuous improvement initiatives in the quality department',
+      'Identified and implemented quality system improvements using JIRA for issue tracking and Power BI and Excel for data analysis, achieving a 30% reduction in overall processing time.',
+      'Resolved harness and module connection failures by collaborating with cross-functional engineering teams to diagnose root causes and deploy corrective actions, reducing recurring defect rates.',
     ],
-    tags: ['Minitab', 'SPC', 'Quality Assurance', 'Electrical Systems'],
+    tags: ['JIRA', 'Power BI', 'Excel', 'Quality Systems', 'Root Cause Analysis'],
   },
 ]
 
@@ -70,24 +78,22 @@ export default function Experience() {
       <div className="max-w-4xl mx-auto">
         <div className="mb-12">
           <p className="section-label mb-3">Career</p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Work Experience
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-white">Work Experience</h2>
         </div>
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500/50 via-[#1e2d3d] to-transparent hidden md:block" />
+          <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-purple-500/50 via-[#1e2d3d] to-transparent hidden md:block" />
 
           <div className="space-y-8">
             {experiences.map((exp, i) => (
               <div key={i} className="relative md:pl-16">
                 {/* Timeline dot */}
                 <div
-                  className="absolute left-4 top-6 w-4 h-4 rounded-full border-2 border-current hidden md:flex items-center justify-center"
-                  style={{ color: exp.color, borderColor: exp.color }}
+                  className="absolute left-[18px] top-6 w-4 h-4 rounded-full border-2 hidden md:flex items-center justify-center"
+                  style={{ borderColor: exp.color }}
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-current" />
+                  <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: exp.color }} />
                 </div>
 
                 <div className="card rounded-xl p-6 gradient-border">
@@ -101,13 +107,13 @@ export default function Experience() {
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-3 text-sm">
-                        <span className="text-blue-400 font-medium">{exp.company}</span>
+                      <div className="flex flex-wrap items-center gap-2 text-sm">
+                        <span className="font-medium" style={{ color: exp.color }}>{exp.company}</span>
                         <span className="text-slate-600">·</span>
                         <span className="text-slate-500">{exp.location}</span>
                       </div>
                     </div>
-                    <span className="text-sm font-mono text-slate-500">{exp.period}</span>
+                    <span className="text-sm font-mono text-slate-500 flex-shrink-0">{exp.period}</span>
                   </div>
 
                   <ul className="space-y-2 mb-4">

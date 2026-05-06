@@ -6,26 +6,30 @@ const education = [
     field: 'Intelligent Systems and Robotics',
     institution: 'University of Essex',
     location: 'Colchester, United Kingdom',
+    period: 'Oct 2024 – Nov 2025',
+    note: 'Study Abroad Double Degree',
     icon: '🤖',
     highlights: [
-      'Dissertation on advanced robotics systems (Python, ROS)',
-      'Specialization in machine learning, computer vision, and autonomous systems',
-      'Research focus on intelligent robotic control and sensor fusion',
+      'Intelligent Systems & Robotics (Fuzzy Logic), Deep Learning & Neural Networks, Machine Learning, Computer Vision.',
+      'Electronic Design, Embedded Systems with RTOS, Microcontrollers (UART, SPI, I2C, Ethernet).',
+      'Dissertation: Deep RL Control System for Autonomous Robotic Manipulation using SAC, PPO, and TD3 on a Franka Emika arm.',
     ],
-    tags: ['ROS', 'Python', 'TensorFlow', 'Computer Vision', 'Machine Learning'],
+    tags: ['ROS/ROS2', 'Deep RL', 'Computer Vision', 'RTOS', 'Embedded Systems', 'Fuzzy Logic', 'PyTorch'],
   },
   {
     degree: 'Bachelor of Science',
     field: 'Mechatronics Engineering',
-    institution: 'Universidad Iberoamericana',
+    institution: 'Tecnológico de Monterrey',
     location: 'Mexico City, Mexico',
+    period: 'Aug 2021 – Jun 2026',
+    note: 'GPA: 95/100 · Academic Talent Scholarship',
     icon: '⚙️',
     highlights: [
-      'Integrated study of mechanical, electrical, and software engineering systems',
-      'Hands-on projects with PLCs (Siemens & Rockwell), CNC, and embedded systems',
-      'CAD design with SolidWorks, CATIA, and PTC Creo',
+      'Mechanical & Electronic Design (CAD, PCBA), Control Systems, Industrial Automation, Robotics.',
+      'Analog & Digital Systems, CNC & PLC Programming (Siemens TIA, Rockwell Studio 5000).',
+      'Project Management with cross-functional engineering teams.',
     ],
-    tags: ['Siemens TIA', 'PLC', 'SolidWorks', 'CATIA', 'Altium', 'MATLAB'],
+    tags: ['PLC (Siemens/Rockwell)', 'SolidWorks', 'CATIA', 'Altium', 'MATLAB/Simulink', 'CNC', 'Control Systems'],
   },
 ]
 
@@ -49,18 +53,20 @@ export default function Education() {
                 </div>
 
                 <div className="flex-1">
-                  <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
+                  <div className="flex flex-wrap items-start justify-between gap-2 mb-1">
                     <div>
-                      <p className="text-slate-500 text-sm font-mono">{edu.degree}</p>
+                      <p className="text-slate-500 text-xs font-mono uppercase tracking-widest mb-1">{edu.degree}</p>
                       <h3 className="text-white text-xl font-bold">{edu.field}</h3>
                     </div>
+                    <span className="text-xs font-mono text-slate-600">{edu.period}</span>
                   </div>
 
-                  <div className="flex items-center gap-3 mb-4 text-sm">
+                  <div className="flex flex-wrap items-center gap-3 mb-1 text-sm">
                     <span className="text-blue-400 font-medium">{edu.institution}</span>
                     <span className="text-slate-600">·</span>
                     <span className="text-slate-500">{edu.location}</span>
                   </div>
+                  <p className="text-xs font-mono text-amber-500/70 mb-4">{edu.note}</p>
 
                   <ul className="space-y-1.5 mb-4">
                     {edu.highlights.map((h, j) => (

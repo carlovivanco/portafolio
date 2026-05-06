@@ -2,41 +2,44 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Carlo Vivanco — Robotics & Software Engineer',
+  title: 'Carlo Vivanco — AI & Robotics Engineer',
   description:
-    'Portfolio of Carlo Vivanco, Mechatronics & Robotics Engineer with experience at Tesla and Ford. Specializing in AI, robotics, automation, and full-stack development.',
+    'Portfolio of Carlo Felipe Vivanco Coronado, Mechatronics Engineer & MSc Intelligent Systems. 3+ years at Tesla, Ford, Stellantis, and Nexxia. Expert in AI agents, ROS/ROS2, embedded systems, and GCP.',
   keywords: [
     'Carlo Vivanco',
-    'Robotics Engineer',
-    'Software Engineer',
+    'Carlo Felipe Vivanco Coronado',
     'AI Engineer',
-    'Mechatronics',
+    'Robotics Engineer',
+    'Mechatronics Engineer',
     'Tesla',
     'Ford',
+    'Nexxia',
     'University of Essex',
+    'Tecnológico de Monterrey',
     'Python',
     'ROS',
-    'Machine Learning',
+    'Multi-Agent AI',
+    'GCP',
   ],
-  authors: [{ name: 'Carlo Vivanco', url: 'https://github.com/carlovivanco' }],
+  authors: [{ name: 'Carlo Felipe Vivanco Coronado', url: 'https://github.com/carlovivanco' }],
   openGraph: {
-    title: 'Carlo Vivanco — Robotics & Software Engineer',
+    title: 'Carlo Vivanco — AI & Robotics Engineer',
     description:
-      'Portfolio of Carlo Vivanco — Mechatronics & Intelligent Systems Engineer.',
+      'Mechatronics Engineer & MSc Intelligent Systems | Tesla · Ford · Nexxia | AI/ML · ROS · GCP',
     type: 'website',
     images: [
       {
         url: 'https://avatars.githubusercontent.com/u/174478033?v=4',
         width: 460,
         height: 460,
-        alt: 'Carlo Vivanco',
+        alt: 'Carlo Felipe Vivanco Coronado',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Carlo Vivanco — Robotics & Software Engineer',
-    description: 'Mechatronics & Intelligent Systems Engineer | Tesla | Ford | MSc Essex',
+    title: 'Carlo Vivanco — AI & Robotics Engineer',
+    description: 'Mechatronics | MSc Robotics | Tesla · Ford · Nexxia | Multi-Agent AI · GCP · ROS',
   },
   robots: { index: true, follow: true },
 }

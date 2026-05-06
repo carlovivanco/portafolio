@@ -1,13 +1,13 @@
 'use client'
 
 import Image from 'next/image'
-import { Github, Linkedin, Mail, ChevronDown } from 'lucide-react'
+import { Github, Mail, ChevronDown, Linkedin } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 const roles = [
+  'AI Automation Engineer',
   'Robotics Engineer',
   'Software Engineer',
-  'AI/ML Engineer',
   'Mechatronics Engineer',
 ]
 
@@ -24,7 +24,7 @@ export default function Hero() {
       if (displayed.length < current.length) {
         timeout = setTimeout(() => setDisplayed(current.slice(0, displayed.length + 1)), 60)
       } else {
-        timeout = setTimeout(() => setTyping(false), 2000)
+        timeout = setTimeout(() => setTyping(false), 2200)
       }
     } else {
       if (displayed.length > 0) {
@@ -62,10 +62,11 @@ export default function Hero() {
             <div className="relative w-full h-full rounded-full border-2 border-blue-500/30 overflow-hidden animate-pulse-glow">
               <Image
                 src="https://avatars.githubusercontent.com/u/174478033?v=4"
-                alt="Carlo Vivanco"
+                alt="Carlo Felipe Vivanco Coronado"
                 fill
                 className="object-cover"
                 priority
+                unoptimized
               />
             </div>
           </div>
@@ -73,22 +74,28 @@ export default function Hero() {
 
         {/* Content */}
         <div className="text-center md:text-left">
-          <p className="section-label mb-3">Available for opportunities</p>
+          <p className="section-label mb-3">Open to new opportunities</p>
 
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-4">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-2">
             Carlo
             <span className="text-blue-400 glow-text"> Vivanco</span>
           </h1>
+          <p className="text-slate-500 text-sm font-mono mb-4">Vivanco Coronado · Mexico City, MX</p>
 
           <div className="flex items-center justify-center md:justify-start gap-3 h-10 mb-6">
             <span className="text-xl md:text-2xl text-slate-300 font-light">{displayed}</span>
             <span className="w-0.5 h-6 bg-blue-400 animate-pulse" />
           </div>
 
-          <p className="text-slate-400 text-base md:text-lg max-w-lg leading-relaxed mb-8">
-            Mechatronics & Intelligent Systems Engineer passionate about robotics, AI, and building
-            software that bridges the physical and digital worlds. Currently a{' '}
-            <span className="text-white font-medium">Software Engineering Intern at Tesla</span>.
+          <p className="text-slate-400 text-base md:text-lg max-w-xl leading-relaxed mb-8">
+            Mechatronics Engineer & MSc Intelligent Systems with{' '}
+            <span className="text-white font-medium">3+ years</span> across automotive, energy &
+            AI. Built production systems at{' '}
+            <span className="text-white font-medium">Tesla</span>,{' '}
+            <span className="text-white font-medium">Ford</span> &{' '}
+            <span className="text-white font-medium">Stellantis</span>. Now architecting
+            multi-agent AI platforms at{' '}
+            <span className="text-white font-medium">Nexxia</span> on GCP.
           </p>
 
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-4">
@@ -116,7 +123,16 @@ export default function Hero() {
                 <Github size={16} />
               </a>
               <a
-                href="mailto:carlovivanco@example.com"
+                href="https://linkedin.com/in/carlofelipevivancocoronado"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2.5 rounded-lg border border-[#1e2d3d] text-slate-400 hover:text-blue-400 hover:border-blue-500/50 transition-all duration-200"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={16} />
+              </a>
+              <a
+                href="mailto:carlo292002@gmail.com"
                 className="p-2.5 rounded-lg border border-[#1e2d3d] text-slate-400 hover:text-white hover:border-blue-500/50 transition-all duration-200"
                 aria-label="Email"
               >
@@ -128,10 +144,10 @@ export default function Hero() {
           {/* Stats */}
           <div className="flex flex-wrap justify-center md:justify-start gap-8 mt-10">
             {[
-              { label: 'Companies', value: '2+' },
+              { label: 'Years Experience', value: '3+' },
+              { label: 'Companies', value: '4' },
               { label: 'Degrees', value: '2' },
-              { label: 'Languages', value: '3' },
-              { label: 'Tech Stack', value: '20+' },
+              { label: 'Tech Stack', value: '30+' },
             ].map(({ label, value }) => (
               <div key={label} className="text-center md:text-left">
                 <div className="text-2xl font-bold text-white">{value}</div>
