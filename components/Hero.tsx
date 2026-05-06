@@ -74,11 +74,10 @@ export default function Hero() {
         <div className="text-center md:text-left">
           <p className="section-label mb-3">Open to new opportunities</p>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-2">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
             Carlo
             <span className="text-blue-400 glow-text"> Vivanco</span>
           </h1>
-          <p className="text-slate-500 text-sm font-mono mb-4">Vivanco Coronado · Mexico City, MX</p>
 
           <div className="flex items-center justify-center md:justify-start gap-3 h-10 mb-6">
             <span className="text-xl md:text-2xl text-slate-300 font-light">{displayed}</span>
