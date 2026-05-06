@@ -1,7 +1,6 @@
 'use client'
 
-import Image from 'next/image'
-import { Github, Mail, ChevronDown, Linkedin } from 'lucide-react'
+import { Github, Mail, ChevronDown, Linkedin, Code2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 const roles = [
@@ -55,19 +54,18 @@ export default function Hero() {
       <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-cyan-600/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-6 py-24 flex flex-col md:flex-row items-center gap-16">
-        {/* Avatar */}
+        {/* Monogram avatar */}
         <div className="flex-shrink-0 animate-float">
-          <div className="relative w-44 h-44 md:w-56 md:h-56">
-            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500/40 to-cyan-500/20 blur-xl" />
-            <div className="relative w-full h-full rounded-full border-2 border-blue-500/30 overflow-hidden animate-pulse-glow">
-              <Image
-                src="https://avatars.githubusercontent.com/u/174478033?v=4"
-                alt="Carlo Felipe Vivanco Coronado"
-                fill
-                className="object-cover"
-                priority
-                unoptimized
-              />
+          <div className="relative w-44 h-44 md:w-52 md:h-52">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-500/20 to-cyan-500/10 blur-xl" />
+            <div className="relative w-full h-full rounded-2xl border border-blue-500/20 bg-[#0f1420] flex flex-col items-center justify-center gap-3 animate-pulse-glow">
+              <div className="text-4xl md:text-5xl font-bold tracking-tighter text-white select-none">
+                <span className="text-blue-400">C</span>V
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20">
+                <Code2 size={12} className="text-blue-400" />
+                <span className="text-xs font-mono text-blue-400">Engineer</span>
+              </div>
             </div>
           </div>
         </div>

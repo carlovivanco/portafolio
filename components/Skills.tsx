@@ -1,9 +1,11 @@
 'use client'
 
+import { Code2, Bot, Cloud, Cpu } from 'lucide-react'
+
 const categories = [
   {
     title: 'Programming',
-    icon: '{ }',
+    Icon: Code2,
     skills: [
       { name: 'Python', level: 95 },
       { name: 'Go', level: 80 },
@@ -14,7 +16,7 @@ const categories = [
   },
   {
     title: 'AI / ML & Robotics',
-    icon: '🤖',
+    Icon: Bot,
     skills: [
       { name: 'Multi-Agent AI (LangGraph)', level: 90 },
       { name: 'RAG Pipelines / LLMs', level: 88 },
@@ -25,7 +27,7 @@ const categories = [
   },
   {
     title: 'Cloud & DevOps',
-    icon: '☁️',
+    Icon: Cloud,
     skills: [
       { name: 'Google Cloud Platform', level: 85 },
       { name: 'Cloud Run / Vertex AI', level: 83 },
@@ -36,7 +38,7 @@ const categories = [
   },
   {
     title: 'Embedded & Hardware',
-    icon: '⚙️',
+    Icon: Cpu,
     skills: [
       { name: 'CAN/LIN/SomeIP/UDS', level: 82 },
       { name: 'PLC (Siemens / Rockwell)', level: 78 },
@@ -83,10 +85,12 @@ export default function Skills() {
 
         {/* Skill bars */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {categories.map(({ title, icon, skills }) => (
+          {categories.map(({ title, Icon, skills }) => (
             <div key={title} className="card rounded-xl p-6">
               <div className="flex items-center gap-3 mb-5">
-                <span className="text-lg">{icon}</span>
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                  <Icon size={15} className="text-blue-400" />
+                </div>
                 <h3 className="text-white font-semibold">{title}</h3>
               </div>
               <div className="space-y-4">

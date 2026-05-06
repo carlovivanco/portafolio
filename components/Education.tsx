@@ -1,5 +1,7 @@
 'use client'
 
+import { Bot, Cog } from 'lucide-react'
+
 const education = [
   {
     degree: 'Master of Science',
@@ -8,7 +10,7 @@ const education = [
     location: 'Colchester, United Kingdom',
     period: 'Oct 2024 – Nov 2025',
     note: 'Study Abroad Double Degree',
-    icon: '🤖',
+    Icon: Bot,
     highlights: [
       'Intelligent Systems & Robotics (Fuzzy Logic), Deep Learning & Neural Networks, Machine Learning, Computer Vision.',
       'Electronic Design, Embedded Systems with RTOS, Microcontrollers (UART, SPI, I2C, Ethernet).',
@@ -23,7 +25,7 @@ const education = [
     location: 'Mexico City, Mexico',
     period: 'Aug 2021 – Jun 2026',
     note: 'GPA: 95/100 · Academic Talent Scholarship',
-    icon: '⚙️',
+    Icon: Cog,
     highlights: [
       'Mechanical & Electronic Design (CAD, PCBA), Control Systems, Industrial Automation, Robotics.',
       'Analog & Digital Systems, CNC & PLC Programming (Siemens TIA, Rockwell Studio 5000).',
@@ -47,8 +49,8 @@ export default function Education() {
             <div key={i} className="card rounded-xl p-8">
               <div className="flex flex-col md:flex-row gap-6">
                 <div className="flex-shrink-0">
-                  <div className="w-16 h-16 rounded-xl bg-[#0f1420] border border-[#1e2d3d] flex items-center justify-center text-3xl">
-                    {edu.icon}
+                  <div className="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                    <edu.Icon size={24} className="text-blue-400" />
                   </div>
                 </div>
 
