@@ -17,30 +17,22 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    const fn = () => setScrolled(window.scrollY > 60)
+    window.addEventListener('scroll', fn)
+    return () => window.removeEventListener('scroll', fn)
   }, [])
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass border-b border-[#1a2332] py-3' : 'py-5'
-      }`}
-    >
+    <nav className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? 'glass border-b border-white/[0.06] py-3.5' : 'py-6'}`}>
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="text-sm font-mono text-slate-500 hover:text-white transition-colors">
-          Carlo Vivanco
+        <a href="#" className="font-mono text-xs text-[var(--text-3)] hover:text-[var(--text-2)] transition-colors tracking-widest">
+          CARLO VIVANCO
         </a>
 
-        {/* Desktop */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden md:flex items-center gap-9">
           {links.map(({ href, label }) => (
             <li key={href}>
-              <a
-                href={href}
-                className="text-xs font-mono text-slate-500 hover:text-white transition-colors uppercase tracking-widest"
-              >
+              <a href={href} className="text-xs font-mono text-[var(--text-3)] hover:text-[var(--text)] transition-colors tracking-widest uppercase">
                 {label}
               </a>
             </li>
@@ -49,36 +41,24 @@ export default function Navbar() {
 
         <a
           href="mailto:carlo292002@gmail.com"
-          className="hidden md:block text-xs font-mono text-slate-500 hover:text-white transition-colors"
+          className="hidden md:block text-xs font-mono text-[var(--text-3)] hover:text-[var(--accent)] transition-colors"
         >
           carlo292002@gmail.com
         </a>
 
-        {/* Mobile */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden p-2 text-slate-500 hover:text-white"
-          aria-label="Toggle menu"
-        >
-          {open ? <X size={18} /> : <Menu size={18} />}
+        <button onClick={() => setOpen(!open)} className="md:hidden p-1.5 text-[var(--text-3)] hover:text-[var(--text)]">
+          {open ? <X size={16} /> : <Menu size={16} />}
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden glass border-t border-[#1a2332]">
-          <ul className="flex flex-col px-6 py-4 gap-4">
-            {links.map(({ href, label }) => (
-              <li key={href}>
-                <a
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className="text-xs font-mono text-slate-500 hover:text-white transition-colors uppercase tracking-widest"
-                >
-                  {label}
-                </a>
-              </li>
-            ))}
-          </ul>
+        <div className="md:hidden glass border-t border-white/[0.06] mt-1 px-6 py-5 space-y-4">
+          {links.map(({ href, label }) => (
+            <a key={href} href={href} onClick={() => setOpen(false)}
+              className="block text-xs font-mono text-[var(--text-3)] hover:text-[var(--text)] tracking-widest uppercase">
+              {label}
+            </a>
+          ))}
         </div>
       )}
     </nav>

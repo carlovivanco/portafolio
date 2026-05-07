@@ -1,55 +1,60 @@
-'use client'
-
-import { Github, Mail, Linkedin, MapPin, Phone } from 'lucide-react'
+import { Github, Mail, Linkedin, Phone, MapPin } from 'lucide-react'
 
 const links = [
-  { icon: Mail, label: 'Email', value: 'carlo292002@gmail.com', href: 'mailto:carlo292002@gmail.com' },
-  { icon: Linkedin, label: 'LinkedIn', value: 'carlofelipevivancocoronado', href: 'https://linkedin.com/in/carlofelipevivancocoronado' },
-  { icon: Github, label: 'GitHub', value: 'carlovivanco', href: 'https://github.com/carlovivanco' },
-  { icon: Phone, label: 'Phone', value: '+52 55 1959 0789', href: 'tel:+525519590789' },
-  { icon: MapPin, label: 'Location', value: 'Mexico City · Open to relocate', href: null },
+  { Icon: Mail,     label: 'Email',    value: 'carlo292002@gmail.com',              href: 'mailto:carlo292002@gmail.com' },
+  { Icon: Linkedin, label: 'LinkedIn', value: 'carlofelipevivancocoronado',          href: 'https://linkedin.com/in/carlofelipevivancocoronado' },
+  { Icon: Github,   label: 'GitHub',   value: 'github.com/carlovivanco',             href: 'https://github.com/carlovivanco' },
+  { Icon: Phone,    label: 'Phone',    value: '+52 55 1959 0789',                    href: 'tel:+525519590789' },
+  { Icon: MapPin,   label: 'Location', value: 'Mexico City · Open to relocation',   href: null },
 ]
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-24 px-6 border-t border-[#1a2332]">
+    <section id="contact" className="py-28 px-6 divider">
       <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-          {/* Left label */}
-          <div className="md:col-span-3">
-            <p className="section-label mt-1">Contact</p>
-          </div>
 
-          {/* Right content */}
-          <div className="md:col-span-9">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
-              Let's work together.
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16 lg:gap-24">
+          <div>
+            <span className="label block mb-6">Contact</span>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text)] leading-tight">
+              Let's work<br />together.
             </h2>
-            <p className="text-slate-400 text-base leading-relaxed mb-12 max-w-lg">
-              Always open to discussing new opportunities, engineering challenges,
-              or connecting with builders and teams doing meaningful work.
+            <p className="text-sm text-[var(--text-2)] leading-relaxed mt-5">
+              Open to new opportunities, engineering challenges,
+              and connecting with teams doing meaningful work.
             </p>
-
-            <div className="space-y-0">
-              {links.map(({ icon: Icon, label, value, href }) => {
-                const inner = (
-                  <div className="flex items-center gap-5 py-4 border-b border-[#1a2332] group">
-                    <Icon size={15} className="text-slate-600 group-hover:text-blue-400 transition-colors flex-shrink-0" />
-                    <span className="text-xs font-mono text-slate-600 w-20 flex-shrink-0 uppercase tracking-widest">{label}</span>
-                    <span className="text-sm text-slate-300 group-hover:text-white transition-colors">{value}</span>
-                  </div>
-                )
-                return href ? (
-                  <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
-                    {inner}
-                  </a>
-                ) : (
-                  <div key={label}>{inner}</div>
-                )
-              })}
+            <div className="flex gap-3 mt-8">
+              <a href="mailto:carlo292002@gmail.com"
+                className="px-5 py-2.5 bg-[var(--accent)] hover:bg-blue-500 text-white text-xs font-mono rounded-lg transition-colors">
+                Send email
+              </a>
+              <a href="https://linkedin.com/in/carlofelipevivancocoronado" target="_blank" rel="noopener noreferrer"
+                className="px-5 py-2.5 border border-white/[0.08] hover:border-white/[0.15] text-[var(--text-2)] hover:text-[var(--text)] text-xs font-mono rounded-lg transition-colors">
+                LinkedIn
+              </a>
             </div>
           </div>
+
+          <div>
+            {links.map(({ Icon, label, value, href }) => {
+              const inner = (
+                <div className="flex items-center gap-5 py-4 border-b border-white/[0.06] group">
+                  <Icon size={14} className="text-[var(--text-3)] group-hover:text-[var(--accent)] transition-colors flex-shrink-0" />
+                  <span className="font-mono text-[10px] text-[var(--text-3)] uppercase tracking-widest w-20 flex-shrink-0">{label}</span>
+                  <span className="text-sm text-[var(--text-2)] group-hover:text-[var(--text)] transition-colors">{value}</span>
+                </div>
+              )
+              return href ? (
+                <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer">
+                  {inner}
+                </a>
+              ) : (
+                <div key={label}>{inner}</div>
+              )
+            })}
+          </div>
         </div>
+
       </div>
     </section>
   )
