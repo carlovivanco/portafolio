@@ -48,17 +48,17 @@ export default function Hero() {
         </div>
 
         {/* Name — large display */}
-        <h1 className="reveal reveal-2 font-bold leading-[0.9] tracking-[-0.04em] mb-8 select-none">
-          <span className="block text-[clamp(4rem,12vw,10rem)] text-[var(--text)]">Carlo</span>
-          <span className="block text-[clamp(4rem,12vw,10rem)] text-[var(--accent)]">Vivanco</span>
+        <h1 className="reveal reveal-2 font-bold tracking-tight mb-8 select-none">
+          <span className="block text-4xl md:text-6xl lg:text-7xl text-[var(--text)]">Carlo</span>
+          <span className="block text-4xl md:text-6xl lg:text-7xl text-[var(--accent)]">Vivanco</span>
         </h1>
 
         {/* Typewriter + divider row */}
         <div className="reveal reveal-3 divider pt-7 flex flex-col md:flex-row md:items-start md:justify-between gap-8">
           {/* Typewriter */}
           <div className="flex items-center gap-2">
-            <span className="text-lg md:text-xl text-[var(--text-2)] font-light tracking-wide">{text}</span>
-            <span className="cursor inline-block w-[2px] h-5 bg-[var(--accent)] align-middle" />
+            <span className="text-xl md:text-2xl text-[var(--text-2)] font-light tracking-wide">{text}</span>
+            <span className="cursor inline-block w-[2px] h-6 bg-[var(--accent)] align-middle" />
           </div>
 
           {/* Right column — summary + socials */}
