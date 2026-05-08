@@ -7,27 +7,27 @@ import { useState } from 'react'
 
 const roboticsMedia = [
   {
-    src: '/portafolio/projects/robotics/simulation.jpg',
+    src: '/portafolio/robotics/simulation.png',
     label: 'Gazebo / Robosuite simulation',
     caption: 'Custom simulation environment — Franka Emika Panda arm performing autonomous screwdriving',
     type: 'photo',
   },
   {
-    src: '/portafolio/projects/robotics/training-curves.jpg',
+    src: '/portafolio/robotics/training-curves.png',
     label: 'SAC vs TD3 — eval/mean_reward',
     caption: 'Training curves over 5M timesteps. SAC (red) converges to 3,715 reward; TD3 (green) to 3,450',
     type: 'graph',
   },
   {
-    src: '/portafolio/projects/robotics/real-robot.jpg',
+    src: '/portafolio/robotics/real-robot.png',
     label: 'Real-world deployment',
     caption: 'Franka Emika Panda in lab environment — hardware-in-the-loop validation',
     type: 'photo',
   },
   {
-    src: '/portafolio/projects/robotics/il-evaluation.jpg',
-    label: 'IL Evaluation — reward vs time step',
-    caption: 'Imitation learning baseline evaluation. Reward peaks at ~0.02 before policy collapse at step 2000',
+    src: '/portafolio/robotics/il-training.png',
+    label: 'IL Training — reward vs time step',
+    caption: 'Imitation learning training reward over timesteps',
     type: 'graph',
   },
 ]
