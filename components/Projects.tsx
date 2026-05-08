@@ -1,26 +1,122 @@
 'use client'
 
-import { Github, ExternalLink, Lock, ChevronDown } from 'lucide-react'
+import { Github, ExternalLink, Lock, ChevronDown, ZoomIn } from 'lucide-react'
 import { useState } from 'react'
 
-/* ─── Code preview snippets ─── */
+/* ─── Robotics image gallery (featured project only) ─── */
+
+const roboticsMedia = [
+  {
+    src: '/portafolio/projects/robotics/simulation.jpg',
+    label: 'Gazebo / Robosuite simulation',
+    caption: 'Custom simulation environment — Franka Emika Panda arm performing autonomous screwdriving',
+    type: 'photo',
+  },
+  {
+    src: '/portafolio/projects/robotics/training-curves.jpg',
+    label: 'SAC vs TD3 — eval/mean_reward',
+    caption: 'Training curves over 5M timesteps. SAC (red) converges to 3,715 reward; TD3 (green) to 3,450',
+    type: 'graph',
+  },
+  {
+    src: '/portafolio/projects/robotics/real-robot.jpg',
+    label: 'Real-world deployment',
+    caption: 'Franka Emika Panda in lab environment — hardware-in-the-loop validation',
+    type: 'photo',
+  },
+  {
+    src: '/portafolio/projects/robotics/il-evaluation.jpg',
+    label: 'IL Evaluation — reward vs time step',
+    caption: 'Imitation learning baseline evaluation. Reward peaks at ~0.02 before policy collapse at step 2000',
+    type: 'graph',
+  },
+]
+
+function RoboticsGallery() {
+  const [zoomed, setZoomed] = useState<number | null>(null)
+
+  return (
+    <>
+      {/* 2×2 grid */}
+      <div className="grid grid-cols-2 gap-1 bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06]">
+        {roboticsMedia.map((item, i) => (
+          <button
+            key={i}
+            onClick={() => setZoomed(i)}
+            className="relative group overflow-hidden"
+            style={{ aspectRatio: '4/3' }}
+            aria-label={`Expand ${item.label}`}
+          >
+            <img
+              src={item.src}
+              alt={item.label}
+              className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${
+                item.type === 'graph' ? 'object-contain bg-[#f8f9fa] p-2' : 'object-cover'
+              }`}
+            />
+            {/* Hover overlay */}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+              <ZoomIn size={20} className="text-white opacity-0 group-hover:opacity-80 transition-opacity" />
+            </div>
+            {/* Label */}
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              <p className="text-[10px] font-mono text-white/80 leading-tight">{item.label}</p>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {zoomed !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-6 cursor-zoom-out"
+          onClick={() => setZoomed(null)}
+        >
+          <div className="max-w-4xl w-full" onClick={e => e.stopPropagation()}>
+            <img
+              src={roboticsMedia[zoomed].src}
+              alt={roboticsMedia[zoomed].label}
+              className={`w-full max-h-[70vh] rounded-xl object-contain ${
+                roboticsMedia[zoomed].type === 'graph' ? 'bg-[#f8f9fa] p-4' : ''
+              }`}
+            />
+            <div className="mt-4 space-y-1 text-center">
+              <p className="text-sm font-semibold text-white">{roboticsMedia[zoomed].label}</p>
+              <p className="text-xs text-[var(--text-2)] max-w-xl mx-auto leading-relaxed">
+                {roboticsMedia[zoomed].caption}
+              </p>
+            </div>
+            <div className="flex justify-center gap-2 mt-5">
+              {roboticsMedia.map((_, j) => (
+                <button
+                  key={j}
+                  onClick={() => setZoomed(j)}
+                  className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                    j === zoomed ? 'bg-[var(--accent)]' : 'bg-white/20 hover:bg-white/40'
+                  }`}
+                />
+              ))}
+            </div>
+            <p className="text-center text-xs font-mono text-white/20 mt-4">click outside to close</p>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+
+/* ─── Code preview for non-featured projects ─── */
 
 function CodePreview({ lines, accent }: { lines: { t: string; c?: string }[][], accent: string }) {
   return (
     <div className="relative h-44 overflow-hidden rounded-t-xl bg-[#080b12] border-b border-white/[0.06] font-mono text-xs leading-relaxed p-5 select-none">
-      {/* Radial glow */}
       <div className="absolute top-0 right-0 w-40 h-40 rounded-full blur-3xl opacity-20 pointer-events-none"
         style={{ background: accent }} />
-      {/* Line numbers + code */}
       <div className="relative space-y-1">
         {lines.map((line, i) => (
           <div key={i} className="flex gap-4">
             <span className="text-white/10 w-4 text-right flex-shrink-0">{i + 1}</span>
-            <span>
-              {line.map((tok, j) => (
-                <span key={j} style={{ color: tok.c ?? 'rgba(255,255,255,0.25)' }}>{tok.t}</span>
-              ))}
-            </span>
+            <span>{line.map((tok, j) => <span key={j} style={{ color: tok.c ?? 'rgba(255,255,255,0.25)' }}>{tok.t}</span>)}</span>
           </div>
         ))}
       </div>
@@ -41,27 +137,18 @@ const projects = [
     github: 'https://github.com/carlovivanco/robotics_disseartation',
     live: null,
     accent: '#8b5cf6',
+    useGallery: true,
     metrics: [
       { value: 'SAC · PPO · TD3', label: 'Algorithms' },
       { value: 'Franka Emika', label: 'Robot' },
       { value: 'ROS 2', label: 'Middleware' },
     ],
-    codeLines: [
-      [{ t: 'from', c: '#8b5cf6' }, { t: ' stable_baselines3 ', c: 'rgba(255,255,255,0.5)' }, { t: 'import', c: '#8b5cf6' }, { t: ' SAC, PPO, TD3', c: '#7dd3fc' }],
-      [{ t: 'from', c: '#8b5cf6' }, { t: ' robosuite ', c: 'rgba(255,255,255,0.5)' }, { t: 'import', c: '#8b5cf6' }, { t: ' make', c: '#7dd3fc' }],
-      [{ t: '' }],
-      [{ t: 'env', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'make', c: '#7dd3fc' }, { t: '("FrankaScrewdriving", ', c: 'rgba(255,255,255,0.4)' }, { t: 'robots', c: '#fbbf24' }, { t: '=["Panda"])', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: 'model', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'SAC', c: '#7dd3fc' }, { t: '("MlpPolicy", env, verbose=', c: 'rgba(255,255,255,0.4)' }, { t: '1', c: '#f87171' }, { t: ')', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: 'model', c: '#e2e8f0' }, { t: '.learn(total_timesteps=', c: 'rgba(255,255,255,0.4)' }, { t: '500_000', c: '#f87171' }, { t: ')', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '' }],
-      [{ t: '# Real-time perception with RealSense + YOLO', c: '#4b5563' }],
-      [{ t: 'pose', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'vision_pipeline', c: '#7dd3fc' }, { t: '.detect_tool(frame)', c: 'rgba(255,255,255,0.4)' }],
-    ],
-    description: 'AI control system for a 7-DOF robotic arm performing autonomous screwdriving without a gripper — using deep reinforcement learning policies trained in simulation.',
+    codeLines: [],
+    description: 'AI control system for a 7-DOF robotic arm performing autonomous screwdriving without a gripper — using deep reinforcement learning policies trained in simulation and validated on real hardware.',
     details: [
-      'Compared SAC, PPO, and TD3 agents in a custom Robosuite/Gazebo simulation, benchmarking convergence and final policy quality across 500K timesteps.',
-      'Computer vision pipeline (OpenCV, YOLO, Intel RealSense) for real-time tool detection and pose estimation — enabling manipulation without dedicated end-effectors.',
-      'ROS 2 architecture for clean separation of perception, planning, and execution nodes with seamless sim-to-real transfer.',
+      'Compared SAC, PPO, and TD3 agents in a custom Robosuite/Gazebo simulation, benchmarking convergence and final policy quality across 5M timesteps. SAC achieved a mean reward of 3,715 vs TD3\'s 3,450.',
+      'Computer vision pipeline (OpenCV, YOLO, Intel RealSense) for real-time tool detection and 6-DOF pose estimation — enabling manipulation without dedicated end-effectors.',
+      'ROS 2 architecture for clean separation of perception, planning, and execution nodes with seamless sim-to-real transfer validated on physical Franka Emika hardware.',
     ],
     tech: ['Python', 'ROS / ROS2', 'Stable-Baselines3', 'Gazebo', 'Robosuite', 'OpenCV', 'YOLO', 'RealSense', 'PyTorch'],
     featured: true,
@@ -76,6 +163,7 @@ const projects = [
     github: 'https://github.com/carlovivanco/autocount',
     live: 'https://autocount-pearl.vercel.app',
     accent: '#3b82f6',
+    useGallery: false,
     metrics: [
       { value: 'Next.js 14', label: 'Framework' },
       { value: 'TypeScript', label: 'Language' },
@@ -111,6 +199,7 @@ const projects = [
     github: 'https://github.com/carlovivanco/trading-bot',
     live: null,
     accent: '#f59e0b',
+    useGallery: false,
     metrics: [
       { value: 'Backtested', label: 'Strategy' },
       { value: 'Live exec.', label: 'Mode' },
@@ -118,7 +207,7 @@ const projects = [
     ],
     codeLines: [
       [{ t: 'class', c: '#8b5cf6' }, { t: ' MomentumStrategy', c: '#7dd3fc' }, { t: '(BaseStrategy):', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '  def', c: '#8b5cf6' }, { t: ' generate_signal', c: '#7dd3fc' }, { t: '(self, data: ', c: 'rgba(255,255,255,0.4)' }, { t: 'DataFrame', c: '#fbbf24' }, { t: ') -> ', c: 'rgba(255,255,255,0.4)' }, { t: 'Signal', c: '#fbbf24' }, { t: ':',c:'rgba(255,255,255,0.4)'}],
+      [{ t: '  def', c: '#8b5cf6' }, { t: ' generate_signal', c: '#7dd3fc' }, { t: '(self, data: ', c: 'rgba(255,255,255,0.4)' }, { t: 'DataFrame', c: '#fbbf24' }, { t: ') -> ', c: 'rgba(255,255,255,0.4)' }, { t: 'Signal', c: '#fbbf24' }, { t: ':', c: 'rgba(255,255,255,0.4)' }],
       [{ t: '    rsi', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'self', c: '#f87171' }, { t: '.calc_rsi(data, period=', c: 'rgba(255,255,255,0.4)' }, { t: '14', c: '#f87171' }, { t: ')', c: 'rgba(255,255,255,0.4)' }],
       [{ t: '    if', c: '#8b5cf6' }, { t: ' rsi[-', c: 'rgba(255,255,255,0.4)' }, { t: '1', c: '#f87171' }, { t: '] < ', c: 'rgba(255,255,255,0.4)' }, { t: '30', c: '#f87171' }, { t: ':  ', c: 'rgba(255,255,255,0.4)' }, { t: '# oversold', c: '#4b5563' }],
       [{ t: '      return', c: '#8b5cf6' }, { t: ' Signal.BUY', c: '#10b981' }],
@@ -143,9 +232,9 @@ function Card({ p }: { p: typeof projects[0] }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <article className="surface rounded-xl overflow-hidden group flex flex-col transition-all duration-300 hover:border-white/[0.13]">
-      {/* Code preview */}
-      <CodePreview lines={p.codeLines as any} accent={p.accent} />
+    <article className="surface rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:border-white/[0.13]">
+      {/* Header: gallery or code preview */}
+      {p.useGallery ? <RoboticsGallery /> : <CodePreview lines={p.codeLines as any} accent={p.accent} />}
 
       {/* Metrics strip */}
       <div className="grid grid-cols-3 border-b border-white/[0.06]">
@@ -159,7 +248,6 @@ function Card({ p }: { p: typeof projects[0] }) {
 
       {/* Body */}
       <div className="p-5 flex flex-col flex-1">
-        {/* Title row */}
         <div className="flex items-start justify-between gap-3 mb-1">
           <div>
             <div className="flex flex-wrap items-center gap-2 mb-0.5">
@@ -195,9 +283,8 @@ function Card({ p }: { p: typeof projects[0] }) {
 
         <p className="text-sm text-[var(--text-2)] leading-relaxed my-3 flex-1">{p.description}</p>
 
-        {/* Expand button */}
         <button onClick={() => setOpen(!open)}
-          className="flex items-center gap-1.5 text-xs font-mono text-[var(--text-3)] hover:text-[var(--text-2)] transition-colors mb-3 group/btn">
+          className="flex items-center gap-1.5 text-xs font-mono text-[var(--text-3)] hover:text-[var(--text-2)] transition-colors mb-3">
           <ChevronDown size={12} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
           {open ? 'Less detail' : 'More detail'}
         </button>
@@ -240,12 +327,10 @@ export default function Projects() {
           </a>
         </div>
 
-        {/* Featured */}
         <div className="mb-6">
           <Card p={featured} />
         </div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {rest.map(p => <Card key={p.name} p={p} />)}
         </div>
