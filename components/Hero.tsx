@@ -64,8 +64,14 @@ export default function Hero() {
           {/* Right column — summary + socials */}
           <div className="md:max-w-sm space-y-5">
             <p className="text-sm text-[var(--text-2)] leading-relaxed">
-              Mechatronics Engineer & MSc Intelligent Systems with 3+ years across automotive,
-              energy, and AI — Tesla, Ford, Stellantis, and Nexxia.
+              Mechatronics Engineer & MSc Intelligent Systems with{' '}
+              <span className="text-[var(--text)] font-medium">3+ years</span> across automotive,
+              energy & AI. Built production systems at{' '}
+              <span className="text-[var(--text)] font-medium">Tesla</span>,{' '}
+              <span className="text-[var(--text)] font-medium">Ford</span> &{' '}
+              <span className="text-[var(--text)] font-medium">Stellantis</span>. Now architecting
+              multi-agent AI platforms at{' '}
+              <span className="text-[var(--text)] font-medium">Nexxia</span> on GCP.
             </p>
 
             <div className="flex items-center gap-3">
