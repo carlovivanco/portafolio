@@ -3,32 +3,144 @@
 import { Github, ExternalLink, Lock, ChevronDown, ZoomIn } from 'lucide-react'
 import { useState } from 'react'
 
-/* ─── Robotics image gallery (featured project only) ─── */
+/* ─── SVG chart helpers ─── */
 
-const roboticsMedia = [
+function smoothPath(pts: [number, number][]): string {
+  if (pts.length < 2) return ''
+  let d = `M ${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`
+  for (let i = 1; i < pts.length; i++) {
+    const p = pts[i - 1], c = pts[i]
+    const mx = ((p[0] + c[0]) / 2).toFixed(1)
+    d += ` C ${mx} ${p[1].toFixed(1)}, ${mx} ${c[1].toFixed(1)}, ${c[0].toFixed(1)} ${c[1].toFixed(1)}`
+  }
+  return d
+}
+
+function TrainingCurvesChart() {
+  const W = 480, H = 185
+  const pl = 46, pr = 16, pt = 18, pb = 30
+  const pw = W - pl - pr, ph = H - pt - pb
+  const px = (x: number) => pl + (x / 5) * pw
+  const py = (y: number) => pt + ph - (y / 4500) * ph
+
+  const sacPts: [number, number][] = (
+    [[0,0],[0.5,30],[1,70],[1.5,120],[2,380],[2.5,750],[3,2100],[3.5,3300],[4,3550],[4.5,3680],[5,3715]]
+  ).map(([x, y]) => [px(x), py(y)])
+
+  const td3Pts: [number, number][] = (
+    [[0,0],[0.3,250],[0.7,1400],[1.1,2700],[1.6,3600],[2,4050],[2.5,4100],[3,3900],[3.5,4000],[4,3850],[5,3450]]
+  ).map(([x, y]) => [px(x), py(y)])
+
+  const base = py(0)
+  const sacLine = smoothPath(sacPts)
+  const td3Line = smoothPath(td3Pts)
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" aria-label="SAC vs TD3 training curves">
+      <defs>
+        <linearGradient id="sacGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
+        </linearGradient>
+        <linearGradient id="td3Grad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#10b981" stopOpacity="0.15" />
+          <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      {[0, 1000, 2000, 3000, 4000].map(y => (
+        <line key={y} x1={pl} y1={py(y)} x2={W - pr} y2={py(y)}
+          stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+      ))}
+
+      <path d={`${td3Line} L ${px(5)} ${base} L ${px(0)} ${base} Z`} fill="url(#td3Grad)" />
+      <path d={`${sacLine} L ${px(5)} ${base} L ${px(0)} ${base} Z`} fill="url(#sacGrad)" />
+      <path d={td3Line} fill="none" stroke="#10b981" strokeWidth="1.8" strokeLinecap="round" />
+      <path d={sacLine} fill="none" stroke="#3b82f6" strokeWidth="1.8" strokeLinecap="round" />
+
+      <circle cx={px(5)} cy={py(3715)} r="2.5" fill="#3b82f6" />
+      <circle cx={px(5)} cy={py(3450)} r="2.5" fill="#10b981" />
+
+      {[0, 1, 2, 3, 4, 5].map(x => (
+        <text key={x} x={px(x)} y={H - 7} textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">
+          {x === 0 ? '0' : `${x}M`}
+        </text>
+      ))}
+      {[1000, 2000, 3000, 4000].map(y => (
+        <text key={y} x={pl - 6} y={py(y) + 3} textAnchor="end" fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">
+          {y / 1000}k
+        </text>
+      ))}
+
+      <rect x={W - pr - 96} y={pt + 1} width="8" height="2" rx="1" fill="#10b981" />
+      <text x={W - pr - 84} y={pt + 6} fontSize="9" fill="rgba(255,255,255,0.4)" fontFamily="monospace">TD3 — 4,100</text>
+      <rect x={W - pr - 96} y={pt + 14} width="8" height="2" rx="1" fill="#3b82f6" />
+      <text x={W - pr - 84} y={pt + 19} fontSize="9" fill="rgba(255,255,255,0.4)" fontFamily="monospace">SAC — 3,715</text>
+    </svg>
+  )
+}
+
+function ILTrainingChart() {
+  const W = 480, H = 185
+  const pl = 46, pr = 16, pt = 18, pb = 30
+  const pw = W - pl - pr, ph = H - pt - pb
+  const px = (x: number) => pl + (x / 100) * pw
+  const py = (y: number) => pt + ph - (y / 0.30) * ph
+
+  const pts: [number, number][] = (
+    [[0,0.25],[3,0.22],[6,0.195],[10,0.165],[15,0.138],[22,0.112],[30,0.093],[40,0.078],[55,0.067],[70,0.060],[85,0.056],[100,0.053]]
+  ).map(([x, y]) => [px(x), py(y)])
+
+  const base = py(0)
+  const line = smoothPath(pts)
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" aria-label="IL training loss">
+      <defs>
+        <linearGradient id="ilGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.2" />
+          <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+
+      {[0, 0.10, 0.20, 0.30].map(y => (
+        <line key={y} x1={pl} y1={py(y)} x2={W - pr} y2={py(y)}
+          stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+      ))}
+
+      <path d={`${line} L ${px(100)} ${base} L ${px(0)} ${base} Z`} fill="url(#ilGrad)" />
+      <path d={line} fill="none" stroke="#8b5cf6" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx={px(100)} cy={py(0.053)} r="2.5" fill="#8b5cf6" />
+
+      {[0, 25, 50, 75, 100].map(x => (
+        <text key={x} x={px(x)} y={H - 7} textAnchor="middle" fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">
+          {x === 0 ? '0' : `${x}k`}
+        </text>
+      ))}
+      {[0.10, 0.20, 0.30].map(y => (
+        <text key={y} x={pl - 6} y={py(y) + 3} textAnchor="end" fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">
+          {y.toFixed(2)}
+        </text>
+      ))}
+
+      <rect x={W - pr - 60} y={pt + 1} width="8" height="2" rx="1" fill="#8b5cf6" />
+      <text x={W - pr - 48} y={pt + 6} fontSize="9" fill="rgba(255,255,255,0.4)" fontFamily="monospace">IL loss</text>
+    </svg>
+  )
+}
+
+/* ─── Robotics gallery ─── */
+
+const roboticsPhotos = [
   {
     src: '/portafolio/robotics/simulation.png',
-    label: 'Gazebo / Robosuite simulation',
-    caption: 'Custom simulation environment — Franka Emika Panda arm performing autonomous screwdriving',
-    type: 'photo',
-  },
-  {
-    src: '/portafolio/robotics/training-curves.png',
-    label: 'SAC vs TD3 — eval/mean_reward',
-    caption: 'Training curves over 5M timesteps. SAC (red) converges to 3,715 reward; TD3 (green) to 3,450',
-    type: 'graph',
+    label: 'Simulation environment',
+    caption: 'Custom Robosuite environment — Franka Emika Panda arm performing autonomous screwdriving with Intel RealSense depth camera',
   },
   {
     src: '/portafolio/robotics/real-robot.png',
     label: 'Real-world deployment',
-    caption: 'Franka Emika Panda in lab environment — hardware-in-the-loop validation',
-    type: 'photo',
-  },
-  {
-    src: '/portafolio/robotics/il-training.png',
-    label: 'IL Training — reward vs time step',
-    caption: 'Imitation learning training reward over timesteps',
-    type: 'graph',
+    caption: 'Franka Emika Panda in lab — hardware-in-the-loop validation of the sim-to-real transfer pipeline',
   },
 ]
 
@@ -37,64 +149,79 @@ function RoboticsGallery() {
 
   return (
     <>
-      {/* 2×2 grid */}
-      <div className="grid grid-cols-2 gap-1 bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06]">
-        {roboticsMedia.map((item, i) => (
+      <div className="bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06]">
+
+        {/* Cinematic simulation photo — full width */}
+        <button
+          onClick={() => setZoomed(0)}
+          className="relative group w-full overflow-hidden block"
+          style={{ aspectRatio: '16/7' }}
+          aria-label="Expand simulation photo"
+        >
+          <img src={roboticsPhotos[0].src} alt={roboticsPhotos[0].label}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/12 transition-colors duration-300" />
+          <ZoomIn size={14} className="absolute top-3 right-3 text-white/0 group-hover:text-white/45 transition-colors duration-300" />
+          <p className="absolute bottom-3 left-4 text-[10px] font-mono text-white/35 uppercase tracking-widest">
+            {roboticsPhotos[0].label}
+          </p>
+        </button>
+
+        {/* Bottom row: real robot photo + SVG charts */}
+        <div className="grid grid-cols-[5fr_8fr]" style={{ minHeight: '17rem' }}>
+
+          {/* Real robot photo */}
           <button
-            key={i}
-            onClick={() => setZoomed(i)}
-            className="relative group overflow-hidden"
-            style={{ aspectRatio: '4/3' }}
-            aria-label={`Expand ${item.label}`}
+            onClick={() => setZoomed(1)}
+            className="relative group overflow-hidden border-r border-white/[0.04]"
+            aria-label="Expand real robot photo"
           >
-            <img
-              src={item.src}
-              alt={item.label}
-              className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03] ${
-                item.type === 'graph' ? 'object-contain bg-[#f8f9fa] p-2' : 'object-cover'
-              }`}
-            />
-            {/* Hover overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-              <ZoomIn size={20} className="text-white opacity-0 group-hover:opacity-80 transition-opacity" />
-            </div>
-            {/* Label */}
-            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 py-2 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-              <p className="text-[10px] font-mono text-white/80 leading-tight">{item.label}</p>
-            </div>
+            <img src={roboticsPhotos[1].src} alt={roboticsPhotos[1].label}
+              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/12 transition-colors duration-300" />
+            <ZoomIn size={13} className="absolute top-2.5 right-2.5 text-white/0 group-hover:text-white/45 transition-colors duration-300" />
+            <p className="absolute bottom-3 left-3 text-[10px] font-mono text-white/35 uppercase tracking-widest">
+              {roboticsPhotos[1].label}
+            </p>
           </button>
-        ))}
+
+          {/* Charts */}
+          <div className="flex flex-col divide-y divide-white/[0.04]">
+            <div className="flex-1 px-4 pt-3 pb-0">
+              <p className="text-[9px] font-mono text-[var(--text-3)] uppercase tracking-widest mb-0.5">
+                SAC vs TD3 — eval/mean_reward · 5M timesteps
+              </p>
+              <TrainingCurvesChart />
+            </div>
+            <div className="flex-1 px-4 pt-3 pb-0">
+              <p className="text-[9px] font-mono text-[var(--text-3)] uppercase tracking-widest mb-0.5">
+                Imitation learning — training loss
+              </p>
+              <ILTrainingChart />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Lightbox */}
+      {/* Lightbox — photos only */}
       {zoomed !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex flex-col items-center justify-center p-6 cursor-zoom-out"
+          className="fixed inset-0 z-50 bg-black/92 flex flex-col items-center justify-center p-6 cursor-zoom-out"
           onClick={() => setZoomed(null)}
         >
           <div className="max-w-4xl w-full" onClick={e => e.stopPropagation()}>
-            <img
-              src={roboticsMedia[zoomed].src}
-              alt={roboticsMedia[zoomed].label}
-              className={`w-full max-h-[70vh] rounded-xl object-contain ${
-                roboticsMedia[zoomed].type === 'graph' ? 'bg-[#f8f9fa] p-4' : ''
-              }`}
-            />
+            <img src={roboticsPhotos[zoomed].src} alt={roboticsPhotos[zoomed].label}
+              className="w-full max-h-[75vh] rounded-xl object-contain" />
             <div className="mt-4 space-y-1 text-center">
-              <p className="text-sm font-semibold text-white">{roboticsMedia[zoomed].label}</p>
-              <p className="text-xs text-[var(--text-2)] max-w-xl mx-auto leading-relaxed">
-                {roboticsMedia[zoomed].caption}
-              </p>
+              <p className="text-sm font-semibold text-white">{roboticsPhotos[zoomed].label}</p>
+              <p className="text-xs text-[var(--text-2)] max-w-xl mx-auto leading-relaxed">{roboticsPhotos[zoomed].caption}</p>
             </div>
             <div className="flex justify-center gap-2 mt-5">
-              {roboticsMedia.map((_, j) => (
-                <button
-                  key={j}
-                  onClick={() => setZoomed(j)}
-                  className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                    j === zoomed ? 'bg-[var(--accent)]' : 'bg-white/20 hover:bg-white/40'
-                  }`}
-                />
+              {roboticsPhotos.map((_, j) => (
+                <button key={j} onClick={() => setZoomed(j)}
+                  className={`w-1.5 h-1.5 rounded-full transition-colors ${j === zoomed ? 'bg-[var(--accent)]' : 'bg-white/20 hover:bg-white/40'}`} />
               ))}
             </div>
             <p className="text-center text-xs font-mono text-white/20 mt-4">click outside to close</p>
