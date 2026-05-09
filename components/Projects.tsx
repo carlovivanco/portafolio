@@ -151,15 +151,15 @@ function RoboticsGallery() {
     <>
       <div className="bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06]">
 
-        {/* Cinematic simulation photo — full width */}
+        {/* Full-width simulation photo */}
         <button
           onClick={() => setZoomed(0)}
           className="relative group w-full overflow-hidden block"
-          style={{ aspectRatio: '16/7' }}
+          style={{ aspectRatio: '16/9' }}
           aria-label="Expand simulation photo"
         >
           <img src={roboticsPhotos[0].src} alt={roboticsPhotos[0].label}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+            className="w-full h-full object-contain bg-[#080b12] transition-transform duration-700 group-hover:scale-[1.02]" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/12 transition-colors duration-300" />
           <ZoomIn size={14} className="absolute top-3 right-3 text-white/0 group-hover:text-white/45 transition-colors duration-300" />
@@ -178,7 +178,7 @@ function RoboticsGallery() {
             aria-label="Expand real robot photo"
           >
             <img src={roboticsPhotos[1].src} alt={roboticsPhotos[1].label}
-              className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-[1.03]" />
+              className="w-full h-full object-contain bg-[#080b12] transition-transform duration-700 group-hover:scale-[1.02]" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/12 transition-colors duration-300" />
             <ZoomIn size={13} className="absolute top-2.5 right-2.5 text-white/0 group-hover:text-white/45 transition-colors duration-300" />
