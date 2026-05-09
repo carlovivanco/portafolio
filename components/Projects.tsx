@@ -129,6 +129,129 @@ function ILTrainingChart() {
   )
 }
 
+/* ─── Animated trading chart ─── */
+
+function TradingChart() {
+  const W = 480, H = 200
+  const pl = 40, pr = 15, pt = 24, pb = 38
+  const pw = W - pl - pr, ph = H - pt - pb
+  const volH = 24, chartH = ph - volH - 6
+
+  const prices = [100,98,96,94,92,95,99,103,108,112,115,118,120,117,114,111,108,112,116,120,124,128,132,129,126,123,127,131,135,138]
+  const n = prices.length
+  const pMin = 86, pMax = 146
+
+  const px = (i: number) => pl + (i / (n - 1)) * pw
+  const py = (p: number) => pt + chartH - ((p - pMin) / (pMax - pMin)) * chartH
+  const sma = (i: number, w: number) => {
+    const s = prices.slice(Math.max(0, i - w + 1), i + 1)
+    return s.reduce((a, b) => a + b, 0) / s.length
+  }
+
+  const pricePts: [number, number][] = prices.map((p, i) => [px(i), py(p)])
+  const ema9Pts:  [number, number][] = prices.map((_, i) => [px(i), py(sma(i, 9))])
+  const ema21Pts: [number, number][] = prices.map((_, i) => [px(i), py(sma(i, 21))])
+
+  const priceLine = smoothPath(pricePts)
+  const ema9Line  = smoothPath(ema9Pts)
+  const ema21Line = smoothPath(ema21Pts)
+
+  const volBase = pt + chartH + 6 + volH
+  const volumes = [40,35,30,38,25,42,55,65,72,80,75,85,90,70,60,55,50,65,75,85,88,92,95,70,60,50,65,75,80,85]
+  const volMax  = Math.max(...volumes)
+  const barW    = (pw / n) * 0.55
+
+  const buyIdx  = [4, 16]
+  const sellIdx = [12]
+  const lastX = px(n - 1), lastY = py(prices[n - 1])
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" aria-label="Trading chart">
+      <defs>
+        <linearGradient id="tradeGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.18" />
+          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+        </linearGradient>
+        <style>{`
+          @keyframes tradeDrawIn { from { stroke-dashoffset: 1200; } to { stroke-dashoffset: 0; } }
+          @keyframes tradePing   { 0% { r: 3; opacity: 0.7; } 100% { r: 10; opacity: 0; } }
+          .trade-line { stroke-dasharray: 1200; animation: tradeDrawIn 2.4s cubic-bezier(0.4,0,0.2,1) forwards; }
+          .trade-ping { animation: tradePing 1.8s ease-out infinite; transform-origin: ${lastX}px ${lastY}px; }
+        `}</style>
+      </defs>
+
+      {[pMin+15, pMin+30, pMin+45, pMin+60].map(p => (
+        <line key={p} x1={pl} y1={py(p)} x2={W-pr} y2={py(p)} stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+      ))}
+
+      {/* Volume bars */}
+      {volumes.map((v, i) => {
+        const isUp = i === 0 || prices[i] >= prices[i - 1]
+        const bh = (v / volMax) * volH
+        return <rect key={i} x={px(i) - barW / 2} y={volBase - bh} width={barW} height={bh}
+          fill={isUp ? 'rgba(16,185,129,0.35)' : 'rgba(239,68,68,0.35)'} />
+      })}
+
+      <path d={`${priceLine} L ${lastX} ${pt + chartH} L ${px(0)} ${pt + chartH} Z`} fill="url(#tradeGrad)" />
+      <path d={ema21Line} fill="none" stroke="#8b5cf6" strokeWidth="1" strokeOpacity="0.5" />
+      <path d={ema9Line}  fill="none" stroke="#06b6d4" strokeWidth="1" strokeOpacity="0.5" />
+      <path className="trade-line" d={priceLine} fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" />
+
+      {/* Buy signals */}
+      {buyIdx.map(i => {
+        const cx = px(i), cy = Math.min(py(prices[i]) + 8, pt + chartH - 4)
+        return (
+          <g key={i}>
+            <polygon points={`${cx},${cy-8} ${cx-5},${cy} ${cx+5},${cy}`} fill="#10b981" opacity="0.85" />
+            <line x1={cx} y1={py(prices[i])} x2={cx} y2={cy-9} stroke="#10b981" strokeWidth="1" strokeDasharray="2,2" strokeOpacity="0.5" />
+          </g>
+        )
+      })}
+
+      {/* Sell signals */}
+      {sellIdx.map(i => {
+        const cx = px(i), cy = Math.max(py(prices[i]) - 8, pt + 4)
+        return (
+          <g key={i}>
+            <polygon points={`${cx},${cy+8} ${cx-5},${cy} ${cx+5},${cy}`} fill="#ef4444" opacity="0.85" />
+            <line x1={cx} y1={py(prices[i])} x2={cx} y2={cy+9} stroke="#ef4444" strokeWidth="1" strokeDasharray="2,2" strokeOpacity="0.5" />
+          </g>
+        )
+      })}
+
+      {/* Live price dot */}
+      <circle className="trade-ping" cx={lastX} cy={lastY} r="3" fill="none" stroke="#f59e0b" strokeWidth="1" />
+      <circle cx={lastX} cy={lastY} r="3" fill="#f59e0b" />
+      <rect x={lastX + 5} y={lastY - 8} width="30" height="14" rx="2" fill="#f59e0b" fillOpacity="0.18" />
+      <text x={lastX + 20} y={lastY + 3} textAnchor="middle" fontSize="8" fill="#f59e0b" fontFamily="monospace" fontWeight="bold">138</text>
+
+      {/* X labels */}
+      {(['Jan','Apr','Jul','Oct'] as const).map((m, k) => (
+        <text key={m} x={px(k === 3 ? n - 1 : k * 10)} y={H - 5} textAnchor="middle"
+          fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">{m}</text>
+      ))}
+
+      {/* Y labels */}
+      {[92, 108, 124, 138].map(p => (
+        <text key={p} x={pl - 5} y={py(p) + 3} textAnchor="end"
+          fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">{p}</text>
+      ))}
+
+      {/* Legend */}
+      <rect x={pl} y={pt - 12} width="8" height="2" rx="1" fill="#f59e0b" />
+      <text x={pl + 12} y={pt - 7} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">Price</text>
+      <rect x={pl + 50} y={pt - 12} width="8" height="2" rx="1" fill="#06b6d4" />
+      <text x={pl + 62} y={pt - 7} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">EMA9</text>
+      <rect x={pl + 105} y={pt - 12} width="8" height="2" rx="1" fill="#8b5cf6" />
+      <text x={pl + 117} y={pt - 7} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">EMA21</text>
+      <polygon points={`${pl + 168},${pt - 14} ${pl + 163},${pt - 8} ${pl + 173},${pt - 8}`} fill="#10b981" />
+      <text x={pl + 177} y={pt - 7} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">BUY</text>
+      <polygon points={`${pl + 208},${pt - 8} ${pl + 203},${pt - 14} ${pl + 213},${pt - 14}`} fill="#ef4444" />
+      <text x={pl + 217} y={pt - 7} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">SELL</text>
+    </svg>
+  )
+}
+
 /* ─── Robotics gallery ─── */
 
 const roboticsPhotos = [
@@ -265,6 +388,7 @@ const projects = [
     live: null,
     accent: '#8b5cf6',
     useGallery: true,
+    useTradingChart: false,
     metrics: [
       { value: 'SAC · PPO · TD3', label: 'Algorithms' },
       { value: 'Franka Emika', label: 'Robot' },
@@ -282,7 +406,7 @@ const projects = [
   },
   {
     name: 'AutoCount',
-    tagline: 'Full-stack inventory automation · Live in production',
+    tagline: 'Computer vision inventory system · Live in production',
     badge: 'Live',
     badgeColor: '#10b981',
     language: 'TypeScript',
@@ -291,29 +415,30 @@ const projects = [
     live: 'https://autocount-pearl.vercel.app',
     accent: '#3b82f6',
     useGallery: false,
+    useTradingChart: false,
     metrics: [
+      { value: 'YOLOv8', label: 'CV Model' },
       { value: 'Next.js 14', label: 'Framework' },
-      { value: 'TypeScript', label: 'Language' },
-      { value: 'Vercel', label: 'Deployed' },
+      { value: '94% mAP', label: 'Accuracy' },
     ],
     codeLines: [
-      [{ t: 'export default function', c: '#8b5cf6' }, { t: ' CountDashboard', c: '#7dd3fc' }, { t: '() {', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '  const', c: '#8b5cf6' }, { t: ' { data, mutate }', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'useSWR', c: '#7dd3fc' }, { t: '("/api/inventory")', c: '#a3e635' }],
+      [{ t: '# Fine-tune YOLOv8 on custom inventory dataset', c: '#4b5563' }],
+      [{ t: 'model', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'YOLO', c: '#7dd3fc' }, { t: '(', c: 'rgba(255,255,255,0.4)' }, { t: '"yolov8n.pt"', c: '#a3e635' }, { t: ')', c: 'rgba(255,255,255,0.4)' }],
+      [{ t: 'results', c: '#e2e8f0' }, { t: ' = model.', c: 'rgba(255,255,255,0.4)' }, { t: 'train', c: '#7dd3fc' }, { t: '(', c: 'rgba(255,255,255,0.4)' }],
+      [{ t: '  data=', c: 'rgba(255,255,255,0.4)' }, { t: '"inventory.yaml"', c: '#a3e635' }, { t: ', epochs=', c: 'rgba(255,255,255,0.4)' }, { t: '50', c: '#f87171' }, { t: ',', c: 'rgba(255,255,255,0.4)' }],
+      [{ t: '  imgsz=', c: 'rgba(255,255,255,0.4)' }, { t: '640', c: '#f87171' }, { t: ', batch=', c: 'rgba(255,255,255,0.4)' }, { t: '16', c: '#f87171' }, { t: ', device=', c: 'rgba(255,255,255,0.4)' }, { t: '"cuda"', c: '#a3e635' }],
+      [{ t: ')' , c: 'rgba(255,255,255,0.4)' }],
       [{ t: '' }],
-      [{ t: '  async function', c: '#8b5cf6' }, { t: ' updateCount', c: '#7dd3fc' }, { t: '(id: ', c: 'rgba(255,255,255,0.4)' }, { t: 'string', c: '#fbbf24' }, { t: ') {', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '    await', c: '#8b5cf6' }, { t: ' mutate', c: '#7dd3fc' }, { t: '(optimisticUpdate(id))', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '    await', c: '#8b5cf6' }, { t: ' fetch', c: '#7dd3fc' }, { t: '(`/api/items/${id}`, {', c: '#a3e635' }],
-      [{ t: '      method:', c: 'rgba(255,255,255,0.4)' }, { t: ' "PATCH"', c: '#a3e635' }, { t: ', body: JSON.stringify(data)', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '    })', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '  }', c: 'rgba(255,255,255,0.4)' }],
+      [{ t: '# Real-time inference + NMS filtering', c: '#4b5563' }],
+      [{ t: 'detections', c: '#e2e8f0' }, { t: ' = model(', c: 'rgba(255,255,255,0.4)' }, { t: 'frame', c: '#e2e8f0' }, { t: ', conf=', c: 'rgba(255,255,255,0.4)' }, { t: '0.45', c: '#f87171' }, { t: ', iou=', c: 'rgba(255,255,255,0.4)' }, { t: '0.5', c: '#f87171' }, { t: ')', c: 'rgba(255,255,255,0.4)' }],
     ],
-    description: 'Production-deployed application for automated inventory counting with real-time dashboards, optimistic UI updates, and full CI/CD deployment via Vercel.',
+    description: 'Computer vision system for automated inventory counting — YOLOv8 fine-tuned on a custom dataset for real-time item detection, integrated with a Next.js dashboard for live stock management.',
     details: [
-      'Next.js 14 App Router with TypeScript end-to-end — type-safe API routes, server components, and optimistic client mutations.',
-      'Real-time sync using SWR with optimistic updates so the UI responds instantly while the server confirms in the background.',
-      'Automated production deploys on every push to main via Vercel CI/CD pipeline.',
+      'Fine-tuned YOLOv8n via transfer learning on ~2,000 custom-labeled inventory images. Achieved 94% mAP@0.5 on the held-out test set after 50 epochs with data augmentation (mosaic, flip, HSV shifts).',
+      'Real-time CV pipeline processes webcam / IP camera streams: per-frame inference → NMS filtering at IoU 0.5 → class-level item counts aggregated and pushed to the dashboard via a lightweight API.',
+      'Next.js 14 App Router with TypeScript end-to-end — optimistic UI updates via SWR so the inventory count reflects instantly while the server confirms, with full CI/CD to Vercel on every push.',
     ],
-    tech: ['TypeScript', 'Next.js 14', 'React', 'SWR', 'Tailwind CSS', 'Vercel'],
+    tech: ['Python', 'YOLOv8', 'OpenCV', 'TypeScript', 'Next.js 14', 'SWR', 'Tailwind CSS', 'Vercel'],
     featured: false,
   },
   {
@@ -327,21 +452,13 @@ const projects = [
     live: null,
     accent: '#f59e0b',
     useGallery: false,
+    useTradingChart: true,
     metrics: [
-      { value: 'Backtested', label: 'Strategy' },
+      { value: 'RSI · MACD', label: 'Indicators' },
+      { value: 'Backtested', label: 'Validated' },
       { value: 'Live exec.', label: 'Mode' },
-      { value: 'Python', label: 'Stack' },
     ],
-    codeLines: [
-      [{ t: 'class', c: '#8b5cf6' }, { t: ' MomentumStrategy', c: '#7dd3fc' }, { t: '(BaseStrategy):', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '  def', c: '#8b5cf6' }, { t: ' generate_signal', c: '#7dd3fc' }, { t: '(self, data: ', c: 'rgba(255,255,255,0.4)' }, { t: 'DataFrame', c: '#fbbf24' }, { t: ') -> ', c: 'rgba(255,255,255,0.4)' }, { t: 'Signal', c: '#fbbf24' }, { t: ':', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '    rsi', c: '#e2e8f0' }, { t: ' = ', c: '#8b5cf6' }, { t: 'self', c: '#f87171' }, { t: '.calc_rsi(data, period=', c: 'rgba(255,255,255,0.4)' }, { t: '14', c: '#f87171' }, { t: ')', c: 'rgba(255,255,255,0.4)' }],
-      [{ t: '    if', c: '#8b5cf6' }, { t: ' rsi[-', c: 'rgba(255,255,255,0.4)' }, { t: '1', c: '#f87171' }, { t: '] < ', c: 'rgba(255,255,255,0.4)' }, { t: '30', c: '#f87171' }, { t: ':  ', c: 'rgba(255,255,255,0.4)' }, { t: '# oversold', c: '#4b5563' }],
-      [{ t: '      return', c: '#8b5cf6' }, { t: ' Signal.BUY', c: '#10b981' }],
-      [{ t: '    elif', c: '#8b5cf6' }, { t: ' rsi[-', c: 'rgba(255,255,255,0.4)' }, { t: '1', c: '#f87171' }, { t: '] > ', c: 'rgba(255,255,255,0.4)' }, { t: '70', c: '#f87171' }, { t: ':  ', c: 'rgba(255,255,255,0.4)' }, { t: '# overbought', c: '#4b5563' }],
-      [{ t: '      return', c: '#8b5cf6' }, { t: ' Signal.SELL', c: '#f87171' }],
-      [{ t: '    return', c: '#8b5cf6' }, { t: ' Signal.HOLD', c: '#fbbf24' }],
-    ],
+    codeLines: [],
     description: 'Algorithmic trading system implementing quantitative strategies with full backtesting on historical data and live order execution with configurable risk controls.',
     details: [
       'Strategy engine supporting RSI, MACD, and momentum signals with configurable position sizing, stop-loss, and take-profit logic.',
@@ -360,8 +477,12 @@ function Card({ p }: { p: typeof projects[0] }) {
 
   return (
     <article className="surface rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:border-white/[0.13]">
-      {/* Header: gallery or code preview */}
-      {p.useGallery ? <RoboticsGallery /> : <CodePreview lines={p.codeLines as any} accent={p.accent} />}
+      {/* Header: gallery, trading chart, or code preview */}
+      {p.useGallery ? <RoboticsGallery /> : p.useTradingChart ? (
+        <div className="relative bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06] px-4 pt-2 pb-1">
+          <TradingChart />
+        </div>
+      ) : <CodePreview lines={p.codeLines as any} accent={p.accent} />}
 
       {/* Metrics strip */}
       <div className="grid grid-cols-3 border-b border-white/[0.06]">
