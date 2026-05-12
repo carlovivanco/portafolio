@@ -129,6 +129,108 @@ function ILTrainingChart() {
   )
 }
 
+/* ─── Peak-hours demand forecast chart ─── */
+
+function PeakHoursChart() {
+  const W = 480, H = 190
+  const pl = 36, pr = 15, pt = 22, pb = 30
+  const pw = W - pl - pr, ph = H - pt - pb
+  const n = 24, yMax = 52
+
+  const actual    = [5,3,2,2,3,5,8,15,22,25,28,30,35,32,28,22,20,25,38,42,45,35,20,10]
+  const predicted = [4,3,2,2,3,5,9,16,23,26,30,32,37,34,30,23,21,27,40,44,47,36,21,10]
+  const threshold = 30
+
+  const px = (i: number) => pl + (i / (n - 1)) * pw
+  const py = (v: number) => pt + ph - (v / yMax) * ph
+  const barW = (pw / n) * 0.65
+
+  const predPts: [number, number][] = predicted.map((v, i) => [px(i), py(v)])
+  const predLine = smoothPath(predPts)
+
+  const peakStart = pt + ph - (threshold / yMax) * ph
+
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} className="w-full" aria-label="Peak hours demand forecast">
+      <defs>
+        <linearGradient id="peakLineGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.25" />
+          <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+        </linearGradient>
+        <style>{`
+          @keyframes peakBarIn { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+          .peak-bar { transform-origin: bottom; animation: peakBarIn 0.6s ease-out both; }
+        `}</style>
+      </defs>
+
+      {/* Grid lines */}
+      {[10, 20, 30, 40, 50].map(v => (
+        <line key={v} x1={pl} y1={py(v)} x2={W - pr} y2={py(v)}
+          stroke={v === threshold ? 'rgba(245,158,11,0.2)' : 'rgba(255,255,255,0.05)'} strokeWidth="1"
+          strokeDasharray={v === threshold ? '4,4' : undefined} />
+      ))}
+
+      {/* Threshold label */}
+      <text x={W - pr - 2} y={peakStart - 3} textAnchor="end" fontSize="8"
+        fill="rgba(245,158,11,0.5)" fontFamily="monospace">peak threshold</text>
+
+      {/* Bars */}
+      {actual.map((v, i) => {
+        const isPeak = predicted[i] >= threshold
+        const bh = (v / yMax) * ph
+        const delay = `${i * 0.03}s`
+        return (
+          <rect key={i}
+            className="peak-bar"
+            x={px(i) - barW / 2} y={py(v)} width={barW} height={bh}
+            fill={isPeak ? 'rgba(245,158,11,0.55)' : 'rgba(59,130,246,0.35)'}
+            rx="1"
+            style={{ animationDelay: delay }}
+          />
+        )
+      })}
+
+      {/* Predicted demand area + line */}
+      <path d={`${predLine} L ${px(n-1)} ${pt+ph} L ${px(0)} ${pt+ph} Z`} fill="url(#peakLineGrad)" />
+      <path d={predLine} fill="none" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" strokeOpacity="0.8" />
+
+      {/* Peak window brackets */}
+      {[{s:11,e:12},{s:18,e:20}].map(({s,e},k) => (
+        <g key={k}>
+          <rect x={px(s) - barW/2 - 1} y={pt} width={px(e) - px(s) + barW + 2} height={ph}
+            fill="rgba(245,158,11,0.05)" rx="2" />
+          <rect x={px(s) - barW/2 - 1} y={pt} width={px(e) - px(s) + barW + 2} height="2"
+            fill="rgba(245,158,11,0.4)" rx="1" />
+          <text x={(px(s) + px(e)) / 2} y={pt + 12} textAnchor="middle"
+            fontSize="7.5" fill="rgba(245,158,11,0.6)" fontFamily="monospace">PEAK</text>
+        </g>
+      ))}
+
+      {/* X labels */}
+      {[0,4,8,12,16,20,23].map(i => (
+        <text key={i} x={px(i)} y={H - 5} textAnchor="middle"
+          fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">
+          {i === 23 ? '23h' : `${i}h`}
+        </text>
+      ))}
+
+      {/* Y labels */}
+      {[10, 30, 50].map(v => (
+        <text key={v} x={pl - 4} y={py(v) + 3} textAnchor="end"
+          fontSize="9" fill="rgba(255,255,255,0.2)" fontFamily="monospace">{v}</text>
+      ))}
+
+      {/* Legend */}
+      <rect x={pl} y={pt - 11} width="8" height="8" rx="1" fill="rgba(59,130,246,0.5)" />
+      <text x={pl + 12} y={pt - 4} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">Actual</text>
+      <rect x={pl + 55} y={pt - 11} width="8" height="8" rx="1" fill="rgba(245,158,11,0.55)" />
+      <text x={pl + 67} y={pt - 4} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">Peak window</text>
+      <rect x={pl + 145} y={pt - 7} width="8" height="2" rx="1" fill="#f59e0b" />
+      <text x={pl + 157} y={pt - 4} fontSize="8" fill="rgba(255,255,255,0.35)" fontFamily="monospace">Forecast</text>
+    </svg>
+  )
+}
+
 /* ─── Animated trading chart ─── */
 
 function TradingChart() {
@@ -389,6 +491,7 @@ const projects = [
     accent: '#8b5cf6',
     useGallery: true,
     useTradingChart: false,
+    usePeakChart: false,
     metrics: [
       { value: 'SAC · PPO · TD3', label: 'Algorithms' },
       { value: 'Franka Emika', label: 'Robot' },
@@ -416,6 +519,7 @@ const projects = [
     accent: '#3b82f6',
     useGallery: false,
     useTradingChart: false,
+    usePeakChart: true,
     metrics: [
       { value: 'YOLOv8', label: 'CV Model' },
       { value: 'GBM', label: 'Peak Forecast' },
@@ -454,6 +558,7 @@ const projects = [
     accent: '#f59e0b',
     useGallery: false,
     useTradingChart: true,
+    usePeakChart: false,
     metrics: [
       { value: 'RSI · MACD', label: 'Indicators' },
       { value: 'Backtested', label: 'Validated' },
@@ -478,10 +583,14 @@ function Card({ p }: { p: typeof projects[0] }) {
 
   return (
     <article className="surface rounded-xl overflow-hidden flex flex-col transition-all duration-300 hover:border-white/[0.13]">
-      {/* Header: gallery, trading chart, or code preview */}
+      {/* Header: gallery, trading chart, peak chart, or code preview */}
       {p.useGallery ? <RoboticsGallery /> : p.useTradingChart ? (
         <div className="relative bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06] px-4 pt-2 pb-1">
           <TradingChart />
+        </div>
+      ) : p.usePeakChart ? (
+        <div className="relative bg-[#080b12] rounded-t-xl overflow-hidden border-b border-white/[0.06] px-4 pt-2 pb-1">
+          <PeakHoursChart />
         </div>
       ) : <CodePreview lines={p.codeLines as any} accent={p.accent} />}
 
