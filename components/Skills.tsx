@@ -1,3 +1,5 @@
+import Section from './Section'
+
 const groups = [
   {
     title: 'Programming',
@@ -35,37 +37,15 @@ const groups = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-28 px-6 divider">
-      <div className="max-w-6xl mx-auto">
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16 lg:gap-24">
-          <div>
-            <span className="label block mb-6">Skills</span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text)] leading-tight">
-              Technologies<br />& expertise.
-            </h2>
+    <Section id="skills" title="Skills">
+      <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2 max-w-4xl">
+        {groups.map(({ title, skills }) => (
+          <div key={title} className="border-t border-rule pt-3">
+            <dt className="font-semibold">{title}</dt>
+            <dd className="mt-1 text-muted">{skills.join(', ')}</dd>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-10">
-            {groups.map(({ title, skills }) => (
-              <div key={title}>
-                <h3 className="font-mono text-xs text-[var(--text-3)] uppercase tracking-widest mb-4 pb-3 border-b border-white/[0.06]">
-                  {title}
-                </h3>
-                <ul className="space-y-2">
-                  {skills.map(s => (
-                    <li key={s} className="flex items-center gap-2.5 text-sm text-[var(--text-2)]">
-                      <span className="w-1 h-1 rounded-full bg-[var(--accent)] opacity-60 flex-shrink-0" />
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-
-      </div>
-    </section>
+        ))}
+      </dl>
+    </Section>
   )
 }

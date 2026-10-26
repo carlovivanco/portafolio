@@ -1,11 +1,11 @@
+import Section from './Section'
+
 const experiences = [
   {
     role: 'AI Automation Engineer',
     company: 'Nexxia',
     period: 'Feb 2026 – Present',
     location: 'Mexico City · Full-Time',
-    current: true,
-    accent: '#8b5cf6',
     bullets: [
       'Leading full-stack development of an enterprise AI platform on GCP with security-hardened infrastructure and production-grade CI/CD pipelines, unifying process management and workforce operations across the organization.',
       'Designing modular multi-agent AI frameworks using Vertex AI Agent Builder and LangGraph, with hybrid RAG pipelines and MCP server integrations enabling specialized tool access across complex, multi-step automated workflows.',
@@ -18,8 +18,6 @@ const experiences = [
     company: 'Tesla',
     period: 'Aug – Dec 2025',
     location: 'Palo Alto, California',
-    current: false,
-    accent: '#e11d48',
     bullets: [
       'Designed software tools and automation frameworks for high-voltage battery validation, enabling seamless communication between testing equipment and vehicle ECUs using Go, C++, and Python.',
       'Analyzed electronic schematics and CAN/UDS networks to deliver embedded test software and complete, modular HV battery test platforms from concept to commissioning.',
@@ -32,8 +30,6 @@ const experiences = [
     company: 'Ford Motor Company',
     period: 'Jun – Sep 2024',
     location: 'Mexico City',
-    current: false,
-    accent: '#3b82f6',
     bullets: [
       'Developed automated validation frameworks for SIL, HIL, and MIL testing using Python, TestStand, LabVIEW, and PyTest; managed CI/CD pipelines in GitHub.',
       'Integrated testing pipelines with CAN, LIN, SomeIP, and Break-Out Box (BOB) protocols, enabling accurate system-level validation against test hardware.',
@@ -46,8 +42,6 @@ const experiences = [
     company: 'Ford Motor Company',
     period: 'Jun 2023 – Jun 2024',
     location: 'Mexico City',
-    current: false,
-    accent: '#3b82f6',
     bullets: [
       'Designed digital twins in MATLAB/Simulink with state machine–based control simulations to model and validate vehicle features such as Trailer Brake Control.',
       'Simulated complete system behavior including module interactions and CAN signals to verify requirements and optimize control logic before hardware integration.',
@@ -60,8 +54,6 @@ const experiences = [
     company: 'Stellantis',
     period: 'Jan – Jun 2023',
     location: 'Mexico City',
-    current: false,
-    accent: '#f59e0b',
     bullets: [
       'Implemented quality system improvements using JIRA, Power BI, and Excel, achieving a 30% reduction in overall processing time and earlier detection of high-impact quality issues across production lines.',
       'Resolved harness and module failures by diagnosing root causes with cross-functional teams and deploying corrective actions to reduce recurring defect rates.',
@@ -72,61 +64,22 @@ const experiences = [
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-28 px-6 divider">
-      <div className="max-w-6xl mx-auto">
-
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-16 lg:gap-24">
-          <div>
-            <span className="label block mb-6">Experience</span>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text)] leading-tight">
-              Where I've<br />worked.
-            </h2>
-          </div>
-
-          <div className="space-y-14">
-            {experiences.map((e, i) => (
-              <div key={i}>
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-1">
-                  <div>
-                    <div className="flex items-center gap-2.5">
-                      <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: e.accent }} />
-                      <h3 className="text-[var(--text)] font-semibold text-base">{e.role}</h3>
-                      {e.current && (
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded border"
-                          style={{ color: e.accent, borderColor: `${e.accent}33`, background: `${e.accent}11` }}>
-                          now
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm text-[var(--text-3)] font-mono ml-4 mt-0.5">
-                      {e.company} · {e.location}
-                    </p>
-                  </div>
-                  <span className="text-xs font-mono text-[var(--text-3)] flex-shrink-0 ml-4 sm:ml-0 mt-0.5">{e.period}</span>
-                </div>
-
-                {/* Bullets */}
-                <ul className="mt-4 space-y-2.5 mb-5 ml-4 pl-1 border-l border-white/[0.05]">
-                  {e.bullets.map((b, j) => (
-                    <li key={j} className="pl-4 text-sm text-[var(--text-2)] leading-relaxed">{b}</li>
-                  ))}
-                </ul>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 ml-4">
-                  {e.tags.map(t => (
-                    <span key={t} className="tag px-2.5 py-1 rounded-md">{t}</span>
-                  ))}
-                </div>
-
-                {i < experiences.length - 1 && <div className="mt-14 divider" />}
-              </div>
-            ))}
-          </div>
-        </div>
-
-      </div>
-    </section>
+    <Section id="experience" title="Experience">
+      <ol className="space-y-14">
+        {experiences.map(e => (
+          <li key={e.role + e.period} className="grid gap-3 lg:grid-cols-[10rem_1fr] lg:gap-8">
+            <p className="font-mono text-sm text-muted">{e.period}</p>
+            <div>
+              <h3 className="text-xl font-semibold tracking-tight">{e.role}</h3>
+              <p className="text-muted">{e.company} · {e.location}</p>
+              <ul className="mt-4 space-y-3 max-w-2xl list-disc pl-5 marker:text-muted">
+                {e.bullets.map(b => <li key={b}>{b}</li>)}
+              </ul>
+              <p className="mt-4 text-sm text-muted max-w-2xl">{e.tags.join(' · ')}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </Section>
   )
 }

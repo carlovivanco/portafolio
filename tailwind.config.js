@@ -8,18 +8,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        accent: {
-          DEFAULT: '#3b82f6',
-          light: '#60a5fa',
-          dark: '#2563eb',
-        },
-        surface: {
-          DEFAULT: '#111827',
-          hover: '#1f2937',
-        },
+        paper: 'var(--paper)', wash: 'var(--wash)', ink: 'var(--ink)',
+        muted: 'var(--muted)', rule: 'var(--rule)', accent: 'var(--accent)',
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out forwards',
