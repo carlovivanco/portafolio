@@ -1,31 +1,39 @@
-const links = [
-  { label: 'GitHub', href: 'https://github.com/carlovivanco', ext: true },
-  { label: 'LinkedIn', href: 'https://linkedin.com/in/carlofelipevivancocoronado', ext: true },
-  { label: 'carlo292002@gmail.com', href: 'mailto:carlo292002@gmail.com', ext: false },
-]
+import { asset, maybe } from '@/lib/asset'
+import { site } from '@/lib/site'
+import LoopVideo from './LoopVideo'
 
 export default function Hero() {
+  const video = maybe('/robotics/franka-real.mp4')
+  const cv = maybe('/cv.pdf')
+  const poster = asset('/robotics/real-robot.png')
+
   return (
-    <section className="mx-auto max-w-6xl px-6 pt-16 pb-20 md:pt-28 md:pb-28">
-      <p className="font-mono text-sm text-muted mb-6">Mexico City</p>
+    <section className="mx-auto max-w-6xl px-6 pt-14 pb-16 md:pt-24 md:pb-24">
+      <p className="num text-sm text-muted mb-6">{site.location}</p>
       <h1 className="text-5xl md:text-7xl font-semibold tracking-tight leading-[1.05]">Carlo Vivanco</h1>
-      <p className="mt-6 text-2xl md:text-3xl text-muted max-w-3xl leading-snug">
-        I build multi-agent AI systems and robotics software.
+      <p className="mt-6 text-2xl md:text-3xl max-w-3xl leading-snug">
+        Robot learning engineer. I train RL and imitation policies in simulation and put them on real robots.
       </p>
-      <p className="mt-8 max-w-2xl text-lg leading-relaxed">
-        Mechatronics Engineer & MSc Intelligent Systems with 3+ years across automotive, energy & AI.
-        Built production systems at Tesla, Ford & Stellantis. Now architecting multi-agent AI platforms
-        at Nexxia on GCP.
-      </p>
-      <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-        {links.map(l => (
-          <li key={l.label}>
-            <a href={l.href} className="link" {...(l.ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-              {l.label}{l.ext ? ' ↗' : ''}
-            </a>
-          </li>
-        ))}
+
+      <ul className="mt-8 flex flex-wrap gap-3">
+        {cv && (
+          <li><a href={cv} download className="btn btn-primary">CV (PDF) ↓</a></li>
+        )}
+        <li><a href={site.github} className="btn" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
+        <li><a href={site.linkedin} className="btn" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
+        <li><a href={`mailto:${site.email}`} className="btn">Email</a></li>
       </ul>
+
+      <figure className="mt-12">
+        {video ? (
+          <LoopVideo src={video} poster={poster} label="Franka arm unscrewing a bolt on real hardware"
+            className="w-full max-h-[70vh] border border-rule bg-wash object-cover aspect-video" />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={poster} alt="Franka Panda arm in the lab" className="w-full max-h-[70vh] border border-rule bg-wash object-cover aspect-video" />
+        )}
+        <figcaption className="mt-2 text-sm text-muted">Franka Panda unscrewing a bolt — policy trained in simulation, running on the real robot.</figcaption>
+      </figure>
     </section>
   )
 }

@@ -11,7 +11,7 @@ const education = [
     highlights: [
       'Intelligent Systems & Robotics (Fuzzy Logic), Deep Learning & Neural Networks, Machine Learning, Computer Vision.',
       'Electronic Design, Embedded Systems with RTOS, Microcontrollers — UART, SPI, I2C, Ethernet.',
-      'Dissertation: Deep RL Control System for Autonomous Robotic Manipulation — SAC, PPO, TD3 on Franka Emika arm.',
+      'Dissertation: Deep RL control for autonomous robotic manipulation — Isaac Lab, 15M training steps, deployed on a real Franka Emika arm.',
     ],
     tags: ['ROS / ROS2', 'Deep RL', 'Computer Vision', 'RTOS', 'Embedded', 'Fuzzy Logic', 'PyTorch'],
   },
@@ -21,7 +21,7 @@ const education = [
     institution: 'Tecnológico de Monterrey',
     location: 'Mexico City, Mexico',
     period: 'Aug 2021 – Jun 2026',
-    note: 'GPA 95/100 · Academic Talent Scholarship',
+    note: 'GPA 95/100 · Academic Talent Scholarship · IELTS C1 Advanced',
     highlights: [
       'Mechanical & Electronic Design (CAD, PCBA), Control Systems, Industrial Automation, Robotics.',
       'Analog & Digital Systems, CNC & PLC Programming — Siemens TIA and Rockwell Studio 5000.',

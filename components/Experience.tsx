@@ -2,16 +2,15 @@ import Section from './Section'
 
 const experiences = [
   {
-    role: 'AI Automation Engineer',
+    role: 'AI Software Engineer',
     company: 'Nexxia',
     period: 'Feb 2026 – Present',
     location: 'Mexico City · Full-Time',
     bullets: [
-      'Leading full-stack development of an enterprise AI platform on GCP with security-hardened infrastructure and production-grade CI/CD pipelines, unifying process management and workforce operations across the organization.',
-      'Designing modular multi-agent AI frameworks using Vertex AI Agent Builder and LangGraph, with hybrid RAG pipelines and MCP server integrations enabling specialized tool access across complex, multi-step automated workflows.',
-      'Architecting agentic automation pipelines that replace manual processes end-to-end, leveraging Cloud Run and event-driven orchestration for intelligent, low-latency automation across business units.',
+      'Build a multi-agent AI platform on GCP (Vertex AI Agent Builder, LangGraph, hybrid RAG, MCP servers) with security-hardened infrastructure and production CI/CD.',
+      'Built the platform\'s model router, reaching 96% routing accuracy, and event-driven Cloud Run pipelines that replace manual processes end to end.',
     ],
-    tags: ['GCP', 'Vertex AI', 'LangGraph', 'RAG', 'Multi-Agent', 'Cloud Run', 'Python', 'CI/CD'],
+    tags: ['GCP', 'Vertex AI', 'LangGraph', 'RAG', 'Python'],
   },
   {
     role: 'Software Engineering Manufacturing Test Intern',
@@ -19,11 +18,10 @@ const experiences = [
     period: 'Aug – Dec 2025',
     location: 'Palo Alto, California',
     bullets: [
-      'Designed software tools and automation frameworks for high-voltage battery validation, enabling seamless communication between testing equipment and vehicle ECUs using Go, C++, and Python.',
-      'Analyzed electronic schematics and CAN/UDS networks to deliver embedded test software and complete, modular HV battery test platforms from concept to commissioning.',
+      'Built software tools and test platforms for high-voltage battery validation, connecting test equipment to vehicle ECUs over CAN/UDS in Go, C++ and Python.',
       'Created automated ECU code generation tools that cut test software development time by 25% per firmware release.',
     ],
-    tags: ['Go', 'C++', 'Python', 'CAN / UDS', 'HV Battery', 'ECU', 'Embedded'],
+    tags: ['Go', 'C++', 'Python', 'CAN / UDS'],
   },
   {
     role: 'Software Integration Automation Trainee',
@@ -31,11 +29,10 @@ const experiences = [
     period: 'Jun – Sep 2024',
     location: 'Mexico City',
     bullets: [
-      'Developed automated validation frameworks for SIL, HIL, and MIL testing using Python, TestStand, LabVIEW, and PyTest; managed CI/CD pipelines in GitHub.',
-      'Integrated testing pipelines with CAN, LIN, SomeIP, and Break-Out Box (BOB) protocols, enabling accurate system-level validation against test hardware.',
-      'Debugged software defects during test development, improving robustness, traceability, and reliability across integration stages.',
+      'Developed automated SIL/HIL/MIL validation frameworks with Python, TestStand, LabVIEW and PyTest, managed through GitHub CI/CD.',
+      'Integrated test pipelines with CAN, LIN and SomeIP hardware, improving traceability and reliability across integration stages.',
     ],
-    tags: ['Python', 'TestStand', 'LabVIEW', 'PyTest', 'CAN / LIN / SomeIP', 'SIL / HIL / MIL'],
+    tags: ['Python', 'PyTest', 'LabVIEW', 'SIL / HIL / MIL'],
   },
   {
     role: 'Feature Systems Engineering Trainee',
@@ -43,11 +40,10 @@ const experiences = [
     period: 'Jun 2023 – Jun 2024',
     location: 'Mexico City',
     bullets: [
-      'Designed digital twins in MATLAB/Simulink with state machine–based control simulations to model and validate vehicle features such as Trailer Brake Control.',
-      'Simulated complete system behavior including module interactions and CAN signals to verify requirements and optimize control logic before hardware integration.',
+      'Designed MATLAB/Simulink digital twins with state-machine control simulations to validate vehicle features such as Trailer Brake Control.',
       "Reduced system validation time by 50% and earned the High Achiever Badge in Ford's Intern City of Tomorrow Challenge.",
     ],
-    tags: ['MATLAB', 'Simulink', 'Digital Twins', 'CAN', 'State Machine', 'Control Systems'],
+    tags: ['MATLAB', 'Simulink', 'Digital Twins', 'Control Systems'],
   },
   {
     role: 'Electrical Quality Engineering Intern',
@@ -55,10 +51,10 @@ const experiences = [
     period: 'Jan – Jun 2023',
     location: 'Mexico City',
     bullets: [
-      'Implemented quality system improvements using JIRA, Power BI, and Excel, achieving a 30% reduction in overall processing time and earlier detection of high-impact quality issues across production lines.',
-      'Resolved harness and module failures by diagnosing root causes with cross-functional teams and deploying corrective actions to reduce recurring defect rates.',
+      'Implemented quality-system improvements with JIRA, Power BI and Excel, cutting overall processing time by 30%.',
+      'Diagnosed harness and module failures with cross-functional teams and deployed corrective actions to reduce recurring defects.',
     ],
-    tags: ['JIRA', 'Power BI', 'Excel', 'Quality Systems', 'Root Cause Analysis'],
+    tags: ['JIRA', 'Power BI', 'Root Cause Analysis'],
   },
 ]
 

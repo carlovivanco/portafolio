@@ -5,7 +5,7 @@ const links = [
   { label: 'LinkedIn', value: 'carlofelipevivancocoronado', href: 'https://linkedin.com/in/carlofelipevivancocoronado' },
   { label: 'GitHub', value: 'github.com/carlovivanco', href: 'https://github.com/carlovivanco' },
   { label: 'Phone', value: '+52 55 1959 0789', href: 'tel:+525519590789' },
-  { label: 'Location', value: 'Mexico City · Open to relocation', href: null },
+  { label: 'Location', value: 'Mexico City · TN visa eligible, relocating to California', href: null },
 ]
 
 export default function Contact() {

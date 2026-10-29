@@ -4,17 +4,25 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 
 const links = [
-  { href: '#about', label: 'About' },
-  { href: '#experience', label: 'Experience' },
   { href: '#projects', label: 'Projects' },
-  { href: '#skills', label: 'Skills' },
+  { href: '#experience', label: 'Experience' },
   { href: '#education', label: 'Education' },
+  { href: '#skills', label: 'Skills' },
   { href: '#contact', label: 'Contact' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
+  const [light, setLight] = useState(false)
+
+  const toggleTheme = () => {
+    const next = !light
+    setLight(next)
+    if (next) document.documentElement.setAttribute('data-theme', 'light')
+    else document.documentElement.removeAttribute('data-theme')
+    try { localStorage.setItem('theme', next ? 'light' : 'dark') } catch {}
+  }
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -25,6 +33,7 @@ export default function Navbar() {
       { rootMargin: '-30% 0px -65% 0px' },
     )
     links.forEach(l => { const el = document.querySelector(l.href); if (el) io.observe(el) })
+    setLight(document.documentElement.getAttribute('data-theme') === 'light')
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
     return () => { io.disconnect(); window.removeEventListener('keydown', onKey) }
@@ -48,6 +57,11 @@ export default function Navbar() {
             )
           })}
         </ul>
+
+        <div className="hidden md:flex items-center gap-3 -ml-4">
+          <button onClick={() => window.dispatchEvent(new Event('open-palette'))} className="num text-xs text-muted border border-rule px-2 py-1 hover:text-ink" aria-label="Open command palette">⌘K</button>
+          <button onClick={toggleTheme} className="text-xs text-muted border border-rule px-2 py-1 hover:text-ink" aria-label="Toggle light/dark theme">{light ? 'Dark' : 'Light'}</button>
+        </div>
 
         <button onClick={() => setOpen(!open)} aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open} aria-controls="mobile-menu" className="md:hidden p-3 -mr-3">

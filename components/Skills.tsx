@@ -2,36 +2,20 @@ import Section from './Section'
 
 const groups = [
   {
+    title: 'Robot Learning',
+    skills: ['Deep RL', 'Imitation learning', 'Sim-to-real transfer', 'PyTorch', 'Stable-Baselines3'],
+  },
+  {
+    title: 'Simulation & Robotics',
+    skills: ['Isaac Lab', 'MuJoCo / robosuite', 'ROS / ROS 2', 'Franka Emika', 'Intel RealSense'],
+  },
+  {
     title: 'Programming',
-    skills: ['Python', 'Go', 'C++', 'JavaScript', 'SQL', 'MATLAB'],
+    skills: ['Python', 'C++', 'Go', 'SQL', 'Linux', 'Docker'],
   },
   {
-    title: 'AI & Machine Learning',
-    skills: ['Multi-Agent AI', 'LangGraph', 'RAG Pipelines', 'Deep RL — SAC / PPO / TD3', 'TensorFlow', 'PyTorch', 'OpenCV', 'YOLO', 'Stable-Baselines3', 'Qdrant'],
-  },
-  {
-    title: 'Robotics',
-    skills: ['ROS / ROS2', 'Gazebo', 'Robosuite', 'Franka Emika', 'Intel RealSense'],
-  },
-  {
-    title: 'Cloud & DevOps',
-    skills: ['Google Cloud Platform', 'Vertex AI', 'Cloud Run', 'Docker', 'CI/CD Pipelines', 'FastAPI', 'Linux', 'GitHub'],
-  },
-  {
-    title: 'Embedded & Protocols',
-    skills: ['CAN / LIN / SomeIP / UDS', 'UART / SPI / I2C / Ethernet', 'PLC — Siemens TIA', 'Rockwell Studio 5000', 'Vector CANalyzer', 'LabVIEW', 'RTOS'],
-  },
-  {
-    title: 'CAD & Simulation',
-    skills: ['SolidWorks', 'CATIA', 'PTC Creo', 'Altium Designer', 'LTspice', 'ANSYS', 'MATLAB / Simulink'],
-  },
-  {
-    title: 'Testing & Validation',
-    skills: ['TestStand', 'PyTest', 'SIL / HIL / MIL', 'Power BI', 'Minitab'],
-  },
-  {
-    title: 'Languages',
-    skills: ['Spanish — Native', 'English — C1 IELTS', 'German — A2 Goethe'],
+    title: 'Perception',
+    skills: ['OpenCV', 'YOLO', '6-DOF pose estimation', 'Camera calibration'],
   },
 ]
 

@@ -2,25 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Light-first; dark follows the OS. One accent (blue), AA on both. */
+/* Dark by default; light via [data-theme="light"]. One accent (blue), AA on both. */
 :root {
+  --paper:  #0f1115;
+  --wash:   #171a20;
+  --ink:    #eceef2;
+  --muted:  #a2abbb;
+  --rule:   #262a33;
+  --accent: #8fb0ff;
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
   --paper:  #f9f9f7;
   --wash:   #f0f0ed;
   --ink:    #15181e;
   --muted:  #4d5666;
   --rule:   #dcdde2;
   --accent: #1c4fd1;
-  color-scheme: light dark;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper:  #0f1115;
-    --wash:   #171a20;
-    --ink:    #eceef2;
-    --muted:  #a2abbb;
-    --rule:   #262a33;
-    --accent: #8fb0ff;
-  }
+  color-scheme: light;
 }
 
 html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
@@ -43,6 +42,15 @@ p, li { text-wrap: pretty; }
 
 .link { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 4px; text-decoration-thickness: 1px; transition: text-decoration-color .2s, color .2s; }
 .link:hover { color: var(--accent); text-decoration-color: currentColor; }
+
+.btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem 1rem; border: 1px solid var(--rule); font-size: .9rem; transition: border-color .2s, color .2s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.btn-primary:hover { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+
+.num { font-family: var(--font-mono), monospace; font-variant-numeric: tabular-nums; }
+
+@keyframes lit { from { opacity: .35; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
