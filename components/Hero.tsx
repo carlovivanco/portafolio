@@ -21,7 +21,7 @@ export default function Hero() {
         )}
         <li><a href={site.github} className="btn" target="_blank" rel="noopener noreferrer">GitHub ↗</a></li>
         <li><a href={site.linkedin} className="btn" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></li>
-        <li><a href={`mailto:${site.email}`} className="btn">Email</a></li>
+        <li><a href={`mailto:${site.email}`} className="btn">{site.email}</a></li>
       </ul>
 
       <figure className="mt-12">
