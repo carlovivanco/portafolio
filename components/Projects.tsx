@@ -50,8 +50,7 @@ function Media({ p }: { p: Project }) {
 function Featured({ p }: { p: Project }) {
   return (
     <article>
-      <Media p={p} />
-      <h3 className="mt-8 text-3xl md:text-5xl font-bold">{p.name}</h3>
+      <h3 className="text-3xl md:text-5xl font-bold">{p.name}</h3>
       <p className="text-muted">{p.tagline}</p>
       <p className="mt-4 max-w-2xl text-lg">{p.oneLiner}</p>
       <Metrics p={p} />
@@ -65,6 +64,31 @@ function Featured({ p }: { p: Project }) {
       <div className="mt-8"><Pipeline /></div>
       <Links p={p} />
       <RoboticsGallery />
+    </article>
+  )
+}
+
+/** Large, unmuted player: the demo's audio (voice command) is part of the result. */
+function Spotlight({ p }: { p: Project }) {
+  const poster = maybe(p.media!.poster)
+  const video = maybe(p.media!.video!)
+  return (
+    <article>
+      {video && (
+        <video
+          controls playsInline preload="metadata"
+          src={video} poster={poster ?? undefined}
+          aria-label={`${p.name} demo`}
+          className="w-full aspect-video rounded-2xl bg-wash"
+        />
+      )}
+      <h3 className="mt-8 text-3xl md:text-5xl font-bold">{p.name}</h3>
+      <p className="text-muted">{p.tagline}</p>
+      <p className="mt-4 max-w-2xl text-lg">{p.oneLiner}</p>
+      <p className="mt-2 text-sm text-muted">Press play, with sound on, to hear the voice command.</p>
+      <Metrics p={p} />
+      <p className="mt-4 text-sm text-muted">{p.tech.join(' · ')}</p>
+      <Links p={p} />
     </article>
   )
 }
@@ -84,10 +108,11 @@ function Card({ p }: { p: Project }) {
 }
 
 export default function Projects() {
-  const [thesis, ...rest] = projects
+  const [thesis, hri, ...rest] = projects
   return (
     <Section id="projects" title="Projects">
       <Featured p={thesis} />
+      <div className="mt-24"><Spotlight p={hri} /></div>
       <ul className="mt-20 grid gap-14 lg:grid-cols-2">
         {rest.map(p => <li key={p.slug} className="transition-transform duration-300 hover:-translate-y-1"><Card p={p} /></li>)}
       </ul>
