@@ -82,27 +82,39 @@ function Spotlight({ p }: { p: Project }) {
           className="w-full aspect-video rounded-2xl bg-wash"
         />
       )}
-      <h3 className="mt-8 text-3xl md:text-5xl font-bold">{p.name}</h3>
-      <p className="text-muted">{p.tagline}</p>
-      <p className="mt-4 max-w-2xl text-lg">{p.oneLiner}</p>
-      <p className="mt-2 text-sm text-muted">Press play, with sound on, to hear the voice command.</p>
-      <Metrics p={p} />
-      <p className="mt-4 text-sm text-muted">{p.tech.join(' · ')}</p>
-      <Links p={p} />
+      <div className="mt-8 grid gap-6 lg:grid-cols-[5fr_6fr] lg:gap-16">
+        <div>
+          <h3 className="text-4xl md:text-6xl font-bold">{p.name}</h3>
+          <p className="mt-2 text-muted">{p.tagline}</p>
+        </div>
+        <div>
+          <p className="max-w-xl text-lg">{p.oneLiner}</p>
+          <p className="mt-2 text-sm text-muted">Press play, with sound on, to hear the voice command.</p>
+          <Metrics p={p} />
+          <p className="mt-4 text-sm text-muted">{p.tech.join(' · ')}</p>
+          <Links p={p} />
+        </div>
+      </div>
     </article>
   )
 }
 
 function Card({ p }: { p: Project }) {
   return (
-    <article className="h-full">
+    <article>
       <Media p={p} />
-      <h3 className="mt-5 text-2xl md:text-3xl font-bold">{p.name}</h3>
-      <p className="text-sm text-muted">{p.tagline}</p>
-      <p className="mt-3 max-w-xl">{p.oneLiner}</p>
-      <Metrics p={p} />
-      <p className="mt-4 text-sm text-muted">{p.tech.join(' · ')}</p>
-      <Links p={p} />
+      <div className="mt-5 grid gap-6 lg:grid-cols-[5fr_6fr] lg:gap-16">
+        <div>
+          <h3 className="text-3xl md:text-5xl font-bold">{p.name}</h3>
+          <p className="mt-2 text-muted">{p.tagline}</p>
+        </div>
+        <div>
+          <p className="max-w-xl text-lg">{p.oneLiner}</p>
+          <Metrics p={p} />
+          <p className="mt-4 text-sm text-muted">{p.tech.join(' · ')}</p>
+          <Links p={p} />
+        </div>
+      </div>
     </article>
   )
 }
@@ -112,9 +124,9 @@ export default function Projects() {
   return (
     <Section id="projects" title="Projects">
       <Featured p={thesis} />
-      <div className="mt-24"><Spotlight p={hri} /></div>
-      <ul className="mt-20 grid gap-14 lg:grid-cols-2">
-        {rest.map(p => <li key={p.slug} className="transition-transform duration-300 hover:-translate-y-1"><Card p={p} /></li>)}
+      <div className="mt-24 border-t border-rule pt-16"><Spotlight p={hri} /></div>
+      <ul className="mt-24 space-y-20 border-t border-rule pt-16">
+        {rest.map(p => <li key={p.slug}><Card p={p} /></li>)}
       </ul>
     </Section>
   )

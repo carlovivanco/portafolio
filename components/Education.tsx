@@ -47,7 +47,7 @@ export default function Education() {
               <ul className="space-y-3 max-w-xl list-disc pl-5 marker:text-accent">
                 {e.highlights.map(h => <li key={h}>{h}</li>)}
               </ul>
-              <p className="mt-4 text-sm text-muted">{e.tags.join(', ')}</p>
+              <p className="num mt-4 text-[0.8rem] text-muted">{e.tags.join(', ')}</p>
             </div>
           </li>
         ))}
