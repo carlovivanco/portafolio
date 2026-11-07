@@ -8,13 +8,13 @@ const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', displ
 
 const title = 'Carlo Vivanco — Robot Learning Engineer'
 const description =
-  'Robot learning engineer. I train RL and imitation policies in simulation and put them on real robots. MSc Intelligent Systems & Robotics, University of Essex. TN visa eligible, relocating to California.'
+  'Robot learning engineer and AI engineer at Nexxia. I train RL and imitation policies (LeRobot, Isaac Lab, Omniverse) and put them on real robots. MSc Intelligent Systems & Robotics, University of Essex. TN visa eligible, relocating to California.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'https://carlovivanco.github.io'),
   title,
   description,
-  keywords: ['Carlo Vivanco', 'Robot Learning', 'Reinforcement Learning', 'Imitation Learning', 'Sim-to-Real', 'Franka', 'Isaac Lab', 'ROS 2'],
+  keywords: ['Carlo Vivanco', 'Robot Learning', 'Reinforcement Learning', 'Imitation Learning', 'Sim-to-Real', 'Franka', 'Isaac Lab', 'Isaac Sim', 'Omniverse', 'LeRobot', 'Diffusion Policy', 'LangGraph', 'ROS 2'],
   authors: [{ name: 'Carlo Felipe Vivanco Coronado', url: 'https://github.com/carlovivanco' }],
   openGraph: {
     title,

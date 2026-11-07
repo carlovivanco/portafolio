@@ -86,10 +86,10 @@ function Card({ p }: { p: Project }) {
 export default function Projects() {
   const [thesis, ...rest] = projects
   return (
-    <Section id="projects" title="Projects">
+    <Section id="projects" n="02" title="Projects">
       <Featured p={thesis} />
       <ul className="mt-20 grid gap-14 lg:grid-cols-2">
-        {rest.map(p => <li key={p.slug}><Card p={p} /></li>)}
+        {rest.map(p => <li key={p.slug} className="transition-transform duration-300 hover:-translate-y-1"><Card p={p} /></li>)}
       </ul>
     </Section>
   )

@@ -1,13 +1,20 @@
+'use client'
+
+import { motion } from 'framer-motion'
 import Section from './Section'
 
 const groups = [
   {
     title: 'Robot Learning',
-    skills: ['Deep RL', 'Imitation learning', 'Sim-to-real transfer', 'PyTorch', 'Stable-Baselines3'],
+    skills: ['Deep RL', 'Imitation learning', 'ACT', 'Diffusion Policy', 'LeRobot', 'Sim-to-real transfer', 'PyTorch', 'Stable-Baselines3'],
   },
   {
     title: 'Simulation & Robotics',
-    skills: ['Isaac Lab', 'MuJoCo / robosuite', 'ROS / ROS 2', 'Franka Emika', 'Intel RealSense'],
+    skills: ['Isaac Lab', 'Isaac Sim', 'Omniverse / Replicator', 'MuJoCo / robosuite', 'ROS / ROS 2', 'Franka Emika', 'Intel RealSense'],
+  },
+  {
+    title: 'AI Engineering',
+    skills: ['LangGraph', 'Vertex AI Agent Builder', 'Hybrid RAG', 'MCP servers', 'GCP / Cloud Run'],
   },
   {
     title: 'Programming',
@@ -21,15 +28,22 @@ const groups = [
 
 export default function Skills() {
   return (
-    <Section id="skills" title="Skills">
-      <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2 max-w-4xl">
+    <Section id="skills" n="05" title="Skills">
+      <div className="grid gap-x-12 gap-y-8 sm:grid-cols-2 max-w-4xl">
         {groups.map(({ title, skills }) => (
           <div key={title} className="border-t border-rule pt-3">
-            <dt className="font-semibold">{title}</dt>
-            <dd className="mt-1 text-muted">{skills.join(', ')}</dd>
+            <h3 className="font-semibold">{title}</h3>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {skills.map((s, i) => (
+                <motion.li key={s} initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+                  transition={{ delay: i * 0.04, type: 'spring', stiffness: 300, damping: 20 }}
+                  whileHover={{ y: -3 }}
+                  className="num text-xs border border-rule px-2 py-1 text-muted transition-colors hover:border-accent hover:text-accent">{s}</motion.li>
+              ))}
+            </ul>
           </div>
         ))}
-      </dl>
+      </div>
     </Section>
   )
 }

@@ -7,6 +7,7 @@ import Experience from '@/components/Experience'
 import Education from '@/components/Education'
 import Skills from '@/components/Skills'
 import Contact from '@/components/Contact'
+import Ambient from '@/components/Ambient'
 import Footer from '@/components/Footer'
 import CommandPalette from '@/components/CommandPalette'
 import { maybe } from '@/lib/asset'
@@ -14,13 +15,14 @@ import { maybe } from '@/lib/asset'
 export default function Home() {
   return (
     <>
+      <Ambient />
       <Navbar />
       <CommandPalette cv={maybe('/cv.pdf')} />
       <main id="main">
-        <Hero />
+        <Hero cv={maybe('/cv.pdf')} />
         <Metrics />
-        <Projects />
         <Now />
+        <Projects />
         <Experience />
         <Education />
         <Skills />

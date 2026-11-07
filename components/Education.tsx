@@ -33,7 +33,7 @@ const education = [
 
 export default function Education() {
   return (
-    <Section id="education" title="Education">
+    <Section id="education" n="04" title="Education">
       <ol className="space-y-12">
         {education.map(e => (
           <li key={e.field} className="grid gap-3 lg:grid-cols-[10rem_1fr] lg:gap-8">

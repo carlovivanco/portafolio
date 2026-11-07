@@ -10,7 +10,7 @@ const links = [
 
 export default function Contact() {
   return (
-    <Section id="contact" title="Contact">
+    <Section id="contact" n="06" title="Contact">
       <p className="text-lg max-w-2xl">
         Open to new opportunities, engineering challenges, and teams doing meaningful work.
       </p>
