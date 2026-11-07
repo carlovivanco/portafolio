@@ -15,14 +15,14 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
-  const [light, setLight] = useState(false)
+  const [dark, setDark] = useState(false)
 
   const toggleTheme = () => {
-    const next = !light
-    setLight(next)
-    if (next) document.documentElement.setAttribute('data-theme', 'light')
+    const next = !dark
+    setDark(next)
+    if (next) document.documentElement.setAttribute('data-theme', 'dark')
     else document.documentElement.removeAttribute('data-theme')
-    try { localStorage.setItem('theme', next ? 'light' : 'dark') } catch {}
+    try { localStorage.setItem('theme', next ? 'dark' : 'light') } catch {}
   }
 
   useEffect(() => {
@@ -34,16 +34,16 @@ export default function Navbar() {
       { rootMargin: '-30% 0px -65% 0px' },
     )
     links.forEach(l => { const el = document.querySelector(l.href); if (el) io.observe(el) })
-    setLight(document.documentElement.getAttribute('data-theme') === 'light')
+    setDark(document.documentElement.getAttribute('data-theme') === 'dark')
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false)
     window.addEventListener('keydown', onKey)
     return () => { io.disconnect(); window.removeEventListener('keydown', onKey) }
   }, [])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-rule bg-paper">
+    <header className="sticky top-0 z-40 bg-paper/80 backdrop-blur-md">
       <nav aria-label="Primary" className="mx-auto max-w-6xl px-6 h-14 flex items-center justify-between">
-        <a href="#main" className="font-semibold tracking-tight">Carlo Vivanco</a>
+        <a href="#main" className="text-lg font-bold tracking-tight">Carlo Vivanco</a>
 
         <ul className="hidden md:flex items-center gap-7">
           {links.map(({ href, label }) => {
@@ -60,8 +60,8 @@ export default function Navbar() {
         </ul>
 
         <div className="hidden md:flex items-center gap-3 -ml-4">
-          <button onClick={() => window.dispatchEvent(new Event('open-palette'))} className="num text-xs text-muted border border-rule px-2 py-1 hover:text-ink" aria-label="Open command palette">⌘K</button>
-          <button onClick={toggleTheme} className="text-xs text-muted border border-rule px-2 py-1 hover:text-ink" aria-label="Toggle light/dark theme">{light ? 'Dark' : 'Light'}</button>
+          <button onClick={() => window.dispatchEvent(new Event('open-palette'))} className="num text-xs text-muted rounded-full border border-rule px-3 py-1 hover:text-ink hover:border-ink transition-colors" aria-label="Open command palette">⌘K</button>
+          <button onClick={toggleTheme} className="text-xs text-muted rounded-full border border-rule px-3 py-1 hover:text-ink hover:border-ink transition-colors" aria-label="Toggle light/dark theme">{dark ? 'Light' : 'Dark'}</button>
         </div>
 
         <button onClick={() => setOpen(!open)} aria-label={open ? 'Close menu' : 'Open menu'}

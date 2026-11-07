@@ -33,7 +33,7 @@ export default function Pipeline() {
               aria-expanded={open === i}
               aria-controls="pipeline-detail"
               style={{ animation: seen ? `lit .5s ${i * 0.18}s both` : undefined, opacity: seen ? undefined : 0.35 }}
-              className={`w-full text-left px-3 py-3 border transition-colors ${seen ? 'border-accent' : 'border-rule'} ${open === i ? 'bg-wash text-accent' : ''}`}>
+              className={`w-full text-left px-3 py-3 rounded-xl border transition-colors ${seen ? 'border-accent' : 'border-rule'} ${open === i ? 'bg-wash text-accent' : ''}`}>
               <span className="num text-xs text-muted">0{i + 1}</span>
               <span className="block font-medium">{s.name}</span>
             </button>

@@ -89,15 +89,9 @@ function ikStep(q: number[], target: number[]) {
   }
 }
 
-type Palette = { accent: string; rule: string }
-const readPalette = (): Palette => {
-  const s = getComputedStyle(document.documentElement)
-  return { accent: s.getPropertyValue('--accent').trim(), rule: s.getPropertyValue('--rule').trim() }
-}
-
 type Ptr = React.MutableRefObject<{ x: number; y: number; t: number }>
 
-function Franka({ pal, pointer, still, hud }: { pal: Palette; pointer: Ptr; still: boolean; hud: React.RefObject<HTMLPreElement> }) {
+function Franka({ pointer, still, hud }: { pointer: Ptr; still: boolean; hud: React.RefObject<HTMLPreElement> }) {
   const colladas = useLoader(ColladaLoader, URLS)
   const meshes = useMemo(() => colladas.map(c => {
     const s = c.scene.clone()
@@ -161,48 +155,42 @@ function Franka({ pal, pointer, still, hud }: { pal: Palette; pointer: Ptr; stil
       </group>
       <mesh ref={target}>
         <sphereGeometry args={[0.07, 16, 16]} />
-        <meshBasicMaterial color={pal.accent} />
+        <meshBasicMaterial color="#ffffff" />
       </mesh>
     </>
   )
 }
 
 export default function RobotArm() {
-  const [pal, setPal] = useState<Palette | null>(null)
   const [still, setStill] = useState(false)
   const [fine, setFine] = useState(true)
   const pointer = useRef({ x: 0, y: 0, t: -1e9 })
   const hud = useRef<HTMLPreElement>(null)
 
   useEffect(() => {
-    setPal(readPalette())
     setStill(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
     setFine(window.matchMedia('(pointer: fine)').matches)
-    const mo = new MutationObserver(() => setPal(readPalette()))
-    mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     const move = (e: PointerEvent) => {
       pointer.current = { x: (e.clientX / window.innerWidth) * 2 - 1, y: 1 - (e.clientY / window.innerHeight) * 2, t: performance.now() }
     }
     window.addEventListener('pointermove', move, { passive: true })
-    return () => { mo.disconnect(); window.removeEventListener('pointermove', move) }
+    return () => window.removeEventListener('pointermove', move)
   }, [])
-
-  if (!pal) return null
 
   return (
     <div className="relative w-full h-full">
-      <Canvas camera={{ position: [3.4, 2.6, 4.4], fov: 38 }} dpr={[1, 2]} aria-label="Franka Panda arm that follows your cursor">
+      <Canvas camera={{ position: [3.0, 2.2, 4.2], fov: 38 }} dpr={[1, 2]} aria-label="Franka Panda arm that follows your cursor">
         <ambientLight intensity={1.1} />
         <directionalLight position={[4, 6, 3]} intensity={2} />
         <directionalLight position={[-4, 3, -3]} intensity={0.8} />
-        <pointLight position={[-3, 2, 2]} intensity={0.8} color={pal.accent} />
-        <gridHelper args={[12, 24, pal.accent, pal.rule]} />
+        <pointLight position={[-3, 2, 2]} intensity={0.8} color="#9db0ff" />
+        <gridHelper args={[14, 28, '#a9b8ff', '#4a63f0']} />
         <Suspense fallback={null}>
-          <Franka pal={pal} pointer={pointer} still={still} hud={hud} />
+          <Franka pointer={pointer} still={still} hud={hud} />
         </Suspense>
-        <OrbitControls target={[0, 0.9, 0]} enableZoom={false} enablePan={false} enabled={fine} minPolarAngle={0.6} maxPolarAngle={1.5} />
+        <OrbitControls target={[0, 0.85, 0]} enableZoom={false} enablePan={false} enabled={fine} minPolarAngle={0.6} maxPolarAngle={1.5} />
       </Canvas>
-      <pre ref={hud} aria-hidden className="num absolute left-3 bottom-3 text-xs leading-5 text-muted pointer-events-none select-none" />
+      <pre ref={hud} aria-hidden className="num absolute right-4 top-4 text-right text-xs leading-5 text-white/70 pointer-events-none select-none" />
     </div>
   )
 }

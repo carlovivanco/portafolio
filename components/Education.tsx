@@ -33,19 +33,21 @@ const education = [
 
 export default function Education() {
   return (
-    <Section id="education" n="04" title="Education">
-      <ol className="space-y-12">
+    <Section id="education" title="Education">
+      <ol className="border-t border-rule">
         {education.map(e => (
-          <li key={e.field} className="grid gap-3 lg:grid-cols-[10rem_1fr] lg:gap-8">
-            <p className="font-mono text-sm text-muted">{e.period}</p>
+          <li key={e.field} className="grid gap-4 border-b border-rule py-10 md:grid-cols-[1fr_1.1fr] md:gap-12">
             <div>
-              <h3 className="text-xl font-semibold tracking-tight">{e.degree}, {e.field}</h3>
-              <p className="text-muted">{e.institution} · {e.location}</p>
+              <h3 className="text-3xl md:text-4xl font-bold leading-tight">{e.institution}</h3>
+              <p className="mt-1 font-medium">{e.degree}, {e.field}</p>
+              <p className="text-muted">{e.period}, {e.location}</p>
               <p className="text-sm text-muted">{e.note}</p>
-              <ul className="mt-4 space-y-2 max-w-2xl list-disc pl-5 marker:text-muted">
+            </div>
+            <div>
+              <ul className="space-y-3 max-w-xl list-disc pl-5 marker:text-accent">
                 {e.highlights.map(h => <li key={h}>{h}</li>)}
               </ul>
-              <p className="mt-4 text-sm text-muted max-w-2xl">{e.tags.join(' · ')}</p>
+              <p className="mt-4 text-sm text-muted">{e.tags.join(', ')}</p>
             </div>
           </li>
         ))}

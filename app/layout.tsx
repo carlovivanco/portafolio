@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Hanken_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, JetBrains_Mono } from 'next/font/google'
 import { asset } from '@/lib/asset'
 import './globals.css'
 
-const sans = Hanken_Grotesk({ subsets: ['latin'], variable: '--font-sans', display: 'swap' })
+const sans = Bricolage_Grotesque({ subsets: ['latin'], variable: '--font-sans', display: 'swap', axes: ['opsz', 'wdth'] })
 const mono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', display: 'swap' })
 
 const title = 'Carlo Vivanco — Robot Learning Engineer'
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-// Applies the saved theme before paint (dark is the default).
-const themeScript = `try{var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light')}catch(e){}`
+// Applies the saved theme before paint (light is the default).
+const themeScript = `try{if(localStorage.getItem('theme')==='dark')document.documentElement.setAttribute('data-theme','dark')}catch(e){}`
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

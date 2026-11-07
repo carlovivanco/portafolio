@@ -1,53 +1,46 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Section from './Section'
 
 // Update monthly.
 const updated = 'November 2026'
-const cards = [
+const rows = [
   {
-    tag: 'Work',
-    title: 'Nexxia · multi-agent AI platform',
-    text: 'Building agentic systems on GCP: Vertex AI Agent Builder, LangGraph, hybrid RAG and MCP servers. Model router at 96% routing accuracy, event-driven Cloud Run pipelines.',
-    stack: ['Vertex AI', 'LangGraph', 'RAG', 'MCP'],
+    title: 'Multi-agent AI platform',
+    where: 'Nexxia, full-time',
+    text: 'Agentic systems on GCP with Vertex AI Agent Builder, LangGraph, hybrid RAG and MCP servers. The model router reaches 96% routing accuracy, and event-driven Cloud Run pipelines replace manual processes.',
   },
   {
-    tag: 'Personal',
-    title: 'LeRobot · SO-101',
-    text: 'Leader–follower teleoperation to record my own demonstration datasets, then training ACT and Diffusion Policy imitation policies on the arm.',
-    stack: ['LeRobot', 'ACT', 'Diffusion Policy', 'PyTorch'],
+    title: 'Imitation learning on an SO-101',
+    where: 'LeRobot, personal',
+    text: 'Leader–follower teleoperation to record my own demonstrations, then training ACT and Diffusion Policy models on the arm.',
   },
   {
-    tag: 'Personal',
-    title: 'Franka · Isaac Lab',
-    text: 'Reinforcement learning for manipulation on the Franka Panda, continuing the dissertation work on sim-to-real transfer.',
-    stack: ['Isaac Lab', 'PPO', 'ROS 2', 'Franka'],
+    title: 'RL manipulation on a Franka',
+    where: 'Isaac Lab, personal',
+    text: 'Reinforcement learning for the Panda arm, picking up where the dissertation left off on sim-to-real transfer.',
   },
   {
-    tag: 'Personal',
-    title: 'Omniverse · Isaac Sim',
-    text: 'A digital twin of the Franka workcell in Omniverse, with Replicator synthetic data to train perception models.',
-    stack: ['Isaac Sim', 'Omniverse', 'Replicator', 'USD'],
+    title: 'A digital twin of the workcell',
+    where: 'Omniverse and Isaac Sim, personal',
+    text: 'The Franka workcell rebuilt in Omniverse, with Replicator generating synthetic data to train perception models.',
   },
 ]
 
 export default function Now() {
   return (
-    <Section id="now" n="01" title="Now">
-      <p className="num text-sm text-muted">Updated {updated}</p>
-      <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-        {cards.map((c, i) => (
-          <motion.li key={c.title}
-            initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-            whileHover={{ y: -6 }}
-            className="group border border-rule bg-wash/40 p-5 transition-colors hover:border-accent">
-            <p className="num text-xs text-accent">{c.tag}</p>
-            <h3 className="mt-1 text-lg font-semibold tracking-tight group-hover:text-accent transition-colors">{c.title}</h3>
-            <p className="mt-2 text-muted">{c.text}</p>
-            <p className="num mt-4 text-xs text-muted">{c.stack.join(' · ')}</p>
-          </motion.li>
+    <Section id="now" title="What I'm working on">
+      <p className="text-muted -mt-6 mb-10">Last updated {updated}.</p>
+      <ul className="border-t border-rule">
+        {rows.map(r => (
+          <li key={r.title} className="group relative border-b border-rule">
+            <div className="absolute inset-0 -mx-6 origin-bottom scale-y-0 rounded-2xl bg-hero transition-transform duration-300 ease-out group-hover:scale-y-100" aria-hidden />
+            <div className="relative grid gap-3 py-8 transition-colors duration-300 group-hover:text-white md:grid-cols-[1fr_1.1fr] md:gap-12 md:py-10">
+              <div>
+                <h3 className="text-2xl md:text-4xl font-bold leading-tight">{r.title}</h3>
+                <p className="mt-2 text-muted transition-colors duration-300 group-hover:text-white/80">{r.where}</p>
+              </div>
+              <p className="max-w-xl md:self-center">{r.text}</p>
+            </div>
+          </li>
         ))}
       </ul>
     </Section>

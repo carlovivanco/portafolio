@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       colors: {
         paper: 'var(--paper)', wash: 'var(--wash)', ink: 'var(--ink)',
-        muted: 'var(--muted)', rule: 'var(--rule)', accent: 'var(--accent)',
+        hero: 'var(--hero)', muted: 'var(--muted)', rule: 'var(--rule)', accent: 'var(--accent)',
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],

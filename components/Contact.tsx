@@ -1,31 +1,24 @@
 import Section from './Section'
+import { site } from '@/lib/site'
 
 const links = [
-  { label: 'Email', value: 'carlo292002@gmail.com', href: 'mailto:carlo292002@gmail.com' },
-  { label: 'LinkedIn', value: 'carlofelipevivancocoronado', href: 'https://linkedin.com/in/carlofelipevivancocoronado' },
-  { label: 'GitHub', value: 'github.com/carlovivanco', href: 'https://github.com/carlovivanco' },
-  { label: 'Phone', value: '+52 55 1959 0789', href: 'tel:+525519590789' },
-  { label: 'Location', value: 'Mexico City · TN visa eligible, relocating to California', href: null },
+  { label: 'LinkedIn', href: site.linkedin },
+  { label: 'GitHub', href: site.github },
+  { label: '+52 55 1959 0789', href: 'tel:+525519590789' },
 ]
 
 export default function Contact() {
   return (
-    <Section id="contact" n="06" title="Contact">
-      <p className="text-lg max-w-2xl">
-        Open to new opportunities, engineering challenges, and teams doing meaningful work.
-      </p>
-      <dl className="mt-10 max-w-2xl border-t border-rule">
-        {links.map(({ label, value, href }) => (
-          <div key={label} className="grid gap-1 sm:grid-cols-[9rem_1fr] py-3 border-b border-rule">
-            <dt className="text-sm text-muted">{label}</dt>
-            <dd>
-              {href ? (
-                <a className="link" href={href} {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{value}</a>
-              ) : value}
-            </dd>
-          </div>
+    <Section id="contact" title="Get in touch">
+      <p className="text-xl max-w-xl">I'm open to robot learning and AI engineering roles. I'm relocating to California and eligible for a TN visa.</p>
+      <a href={`mailto:${site.email}`} className="mt-8 inline-block break-all text-[clamp(1.75rem,6vw,4.5rem)] font-bold leading-tight tracking-tight underline decoration-4 underline-offset-8 decoration-rule transition-colors hover:text-accent hover:decoration-accent">
+        {site.email}
+      </a>
+      <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-2">
+        {links.map(l => (
+          <li key={l.label}><a className="link" href={l.href} {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>{l.label}</a></li>
         ))}
-      </dl>
+      </ul>
     </Section>
   )
 }

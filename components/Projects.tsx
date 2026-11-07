@@ -38,7 +38,7 @@ function Media({ p }: { p: Project }) {
   const poster = maybe(p.media.poster)
   const video = p.media.video ? maybe(p.media.video) : null
   if (!poster && !video) return null
-  const cls = 'w-full aspect-video object-cover border border-rule bg-wash'
+  const cls = 'w-full aspect-video object-cover rounded-2xl bg-wash'
   return video ? (
     <LoopVideo hover src={video} poster={poster ?? undefined} label={`${p.name} demo`} className={cls} />
   ) : (
@@ -51,7 +51,7 @@ function Featured({ p }: { p: Project }) {
   return (
     <article>
       <Media p={p} />
-      <h3 className="mt-6 text-2xl md:text-3xl font-semibold tracking-tight">{p.name}</h3>
+      <h3 className="mt-8 text-3xl md:text-5xl font-bold">{p.name}</h3>
       <p className="text-muted">{p.tagline}</p>
       <p className="mt-4 max-w-2xl text-lg">{p.oneLiner}</p>
       <Metrics p={p} />
@@ -73,7 +73,7 @@ function Card({ p }: { p: Project }) {
   return (
     <article className="h-full">
       <Media p={p} />
-      <h3 className="mt-5 text-xl font-semibold tracking-tight">{p.name}</h3>
+      <h3 className="mt-5 text-2xl md:text-3xl font-bold">{p.name}</h3>
       <p className="text-sm text-muted">{p.tagline}</p>
       <p className="mt-3 max-w-xl">{p.oneLiner}</p>
       <Metrics p={p} />
@@ -86,7 +86,7 @@ function Card({ p }: { p: Project }) {
 export default function Projects() {
   const [thesis, ...rest] = projects
   return (
-    <Section id="projects" n="02" title="Projects">
+    <Section id="projects" title="Projects">
       <Featured p={thesis} />
       <ul className="mt-20 grid gap-14 lg:grid-cols-2">
         {rest.map(p => <li key={p.slug} className="transition-transform duration-300 hover:-translate-y-1"><Card p={p} /></li>)}

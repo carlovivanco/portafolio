@@ -1,49 +1,30 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import Section from './Section'
 
 const groups = [
-  {
-    title: 'Robot Learning',
-    skills: ['Deep RL', 'Imitation learning', 'ACT', 'Diffusion Policy', 'LeRobot', 'Sim-to-real transfer', 'PyTorch', 'Stable-Baselines3'],
-  },
-  {
-    title: 'Simulation & Robotics',
-    skills: ['Isaac Lab', 'Isaac Sim', 'Omniverse / Replicator', 'MuJoCo / robosuite', 'ROS / ROS 2', 'Franka Emika', 'Intel RealSense'],
-  },
-  {
-    title: 'AI Engineering',
-    skills: ['LangGraph', 'Vertex AI Agent Builder', 'Hybrid RAG', 'MCP servers', 'GCP / Cloud Run'],
-  },
-  {
-    title: 'Programming',
-    skills: ['Python', 'C++', 'Go', 'SQL', 'Linux', 'Docker'],
-  },
-  {
-    title: 'Perception',
-    skills: ['OpenCV', 'YOLO', '6-DOF pose estimation', 'Camera calibration'],
-  },
+  { title: 'Robot learning', skills: ['Deep RL', 'Imitation learning', 'ACT', 'Diffusion Policy', 'LeRobot', 'Sim-to-real transfer', 'PyTorch', 'Stable-Baselines3'] },
+  { title: 'Simulation and robotics', skills: ['Isaac Lab', 'Isaac Sim', 'Omniverse / Replicator', 'MuJoCo / robosuite', 'ROS / ROS 2', 'Franka Emika', 'Intel RealSense'] },
+  { title: 'AI engineering', skills: ['LangGraph', 'Vertex AI Agent Builder', 'Hybrid RAG', 'MCP servers', 'GCP / Cloud Run'] },
+  { title: 'Programming', skills: ['Python', 'C++', 'Go', 'SQL', 'Linux', 'Docker'] },
+  { title: 'Perception', skills: ['OpenCV', 'YOLO', '6-DOF pose estimation', 'Camera calibration'] },
 ]
 
 export default function Skills() {
   return (
-    <Section id="skills" n="05" title="Skills">
-      <div className="grid gap-x-12 gap-y-8 sm:grid-cols-2 max-w-4xl">
+    <Section id="skills" title="Skills">
+      <dl className="border-t border-rule">
         {groups.map(({ title, skills }) => (
-          <div key={title} className="border-t border-rule pt-3">
-            <h3 className="font-semibold">{title}</h3>
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {skills.map((s, i) => (
-                <motion.li key={s} initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
-                  transition={{ delay: i * 0.04, type: 'spring', stiffness: 300, damping: 20 }}
-                  whileHover={{ y: -3 }}
-                  className="num text-xs border border-rule px-2 py-1 text-muted transition-colors hover:border-accent hover:text-accent">{s}</motion.li>
-              ))}
-            </ul>
+          <div key={title} className="grid gap-3 border-b border-rule py-6 md:grid-cols-[1fr_2.2fr] md:gap-12">
+            <dt className="font-bold text-lg">{title}</dt>
+            <dd>
+              <ul className="flex flex-wrap gap-2">
+                {skills.map(s => (
+                  <li key={s} className="rounded-full border border-rule px-3.5 py-1 text-[0.95rem] transition-colors hover:bg-hero hover:border-hero hover:text-white">{s}</li>
+                ))}
+              </ul>
+            </dd>
           </div>
         ))}
-      </div>
+      </dl>
     </Section>
   )
 }
