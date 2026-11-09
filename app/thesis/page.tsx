@@ -61,6 +61,16 @@ export default function Thesis() {
         </p>
       </section>
 
+      <section className="mt-14" aria-labelledby="demo">
+        <h2 id="demo" className="text-xl font-semibold text-center">Demonstration video</h2>
+        <p className="mt-4 text-center text-sm text-muted">
+          Trained policy (imitation learning + DAgger) running the full task in simulation (MuJoCo / robosuite): approach, grasp,
+          unscrew about 14 rad and lift the bolt. Shown at 2x speed.
+        </p>
+        {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+        <video className="mt-6 w-full aspect-video border border-rule bg-wash" src={asset('/robotics/thesis-demo.mp4')} controls preload="metadata" playsInline />
+      </section>
+
       <section className="mt-14" aria-labelledby="method">
         <h2 id="method" className="text-xl font-semibold text-center">Method</h2>
         <div className="mt-6"><Pipeline /></div>
