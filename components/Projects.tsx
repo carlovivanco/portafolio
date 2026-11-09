@@ -56,9 +56,9 @@ function Featured({ p }: { p: Project }) {
       <Metrics p={p} />
 
       <dl className="mt-8 grid gap-6 md:grid-cols-3 max-w-4xl">
-        <div><dt className="font-semibold">Problem</dt><dd className="mt-1 text-muted">Unscrewing a bolt with a gripper-less arm needs contact-rich control that is hard to hand-code and unsafe to learn on hardware.</dd></div>
-        <div><dt className="font-semibold">Method</dt><dd className="mt-1 text-muted">RL policy trained at scale in Isaac Lab, with a YOLO + RealSense perception stack feeding pose estimates through ROS 2.</dd></div>
-        <div><dt className="font-semibold">Result</dt><dd className="mt-1 text-muted">15M training steps in simulation, then deployed and validated on a physical Franka Emika Panda.</dd></div>
+        <div><dt className="font-semibold">Problem</dt><dd className="mt-1 text-muted">Unscrewing a bolt with a gripper-less arm needs contact-rich control that is hard to hand-code, and pure RL from scratch is sample-hungry and unsafe to explore on hardware.</dd></div>
+        <div><dt className="font-semibold">Method</dt><dd className="mt-1 text-muted">Imitation learning from demonstrations (behaviour cloning, with DAgger to fix compounding errors) combined with deep RL trained at scale in Isaac Lab, with a YOLO + RealSense perception stack feeding pose estimates through ROS 2.</dd></div>
+        <div><dt className="font-semibold">Result</dt><dd className="mt-1 text-muted">The imitation policy completes approach, grasp, unscrew (~14 rad) and lift in simulation; the RL stage runs 15M training steps in Isaac Lab, and the result is deployed and validated on a physical Franka Emika Panda.</dd></div>
       </dl>
 
       <div className="mt-8"><Pipeline /></div>

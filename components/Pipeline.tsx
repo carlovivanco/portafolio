@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 const stages = [
   { name: 'Camera', stack: 'Intel RealSense RGB-D, calibrated to the robot base frame.' },
   { name: 'YOLO', stack: 'YOLO + OpenCV for real-time tool detection and 6-DOF pose estimation.' },
-  { name: 'Policy', stack: 'RL policy trained in Isaac Lab (15M steps) with PyTorch; imitation baseline for comparison.' },
+  { name: 'Policy', stack: 'PyTorch policy: imitation learning (behaviour cloning + DAgger) from demonstrations, then deep RL in Isaac Lab (15M steps).' },
   { name: 'ROS 2', stack: 'Separate perception, planning and execution nodes; the same interface serves sim and hardware.' },
   { name: 'Franka', stack: 'Franka Emika Panda, 7-DOF arm performing screwdriving without a gripper.' },
 ]

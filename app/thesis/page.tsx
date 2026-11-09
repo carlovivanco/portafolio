@@ -11,7 +11,7 @@ import { site } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Imitation Learning + Deep RL for Robotic Manipulation — Carlo Vivanco',
-  description: 'MSc dissertation: an RL policy trained in Isaac Lab (15M steps) unscrews a bolt on a real Franka Emika Panda.',
+  description: 'MSc dissertation: imitation learning (BC + DAgger) combined with deep RL in Isaac Lab (15M steps) lets a real Franka Emika Panda unscrew a bolt.',
 }
 
 const bibtex = `@mastersthesis{vivanco2025deeprl,
@@ -54,10 +54,10 @@ export default function Thesis() {
       <section className="mt-14" aria-labelledby="abstract">
         <h2 id="abstract" className="text-xl font-semibold text-center">Abstract</h2>
         <p className="mt-4">
-          We train a reinforcement learning policy that lets a 7-DOF Franka Emika Panda arm unscrew a bolt without a
-          gripper. The policy is trained in Isaac Lab for 15M steps and deployed on the physical robot, with a camera
-          pipeline (YOLO + Intel RealSense) estimating the 6-DOF pose of the tool and ROS 2 connecting perception,
-          planning and execution.
+          We combine imitation learning and deep reinforcement learning to let a 7-DOF Franka Emika Panda arm unscrew a
+          bolt without a gripper. A policy is first learned from demonstrations with behaviour cloning and DAgger, then
+          trained with deep RL in Isaac Lab for 15M steps and deployed on the physical robot. A camera pipeline (YOLO +
+          Intel RealSense) estimates the 6-DOF pose of the tool and ROS 2 connects perception, planning and execution.
         </p>
       </section>
 
