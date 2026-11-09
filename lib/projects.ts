@@ -14,7 +14,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: 'thesis',
-    name: 'Deep RL for Robotic Manipulation',
+    name: 'Imitation Learning + Deep RL for Robotic Manipulation',
     tagline: 'MSc Dissertation · University of Essex',
     oneLiner: 'A 7-DOF Franka arm unscrews a bolt with no gripper, using an RL policy trained in Isaac Lab and deployed on the real robot.',
     metrics: [['Training', '15M steps'], ['Simulator', 'Isaac Lab'], ['Deployment', 'Real Franka']],

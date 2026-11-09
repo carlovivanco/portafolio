@@ -3,7 +3,7 @@ import Section from './Section'
 import LoopVideo from './LoopVideo'
 import Pipeline from './Pipeline'
 import RoboticsGallery from './RoboticsGallery'
-import { maybe } from '@/lib/asset'
+import { asset, maybe } from '@/lib/asset'
 import { projects, type Project } from '@/lib/projects'
 
 function Links({ p }: { p: Project }) {
@@ -62,6 +62,21 @@ function Featured({ p }: { p: Project }) {
       </dl>
 
       <div className="mt-8"><Pipeline /></div>
+
+      <figure className="mt-10">
+        <video
+          controls playsInline preload="metadata"
+          src={asset('/robotics/thesis-demo.mp4')}
+          poster={maybe('/robotics/simulation.png') ?? undefined}
+          aria-label="Dissertation demonstration: trained policy unscrewing and lifting the bolt in simulation"
+          className="w-full aspect-video border border-rule bg-wash"
+        />
+        <figcaption className="mt-2 text-sm text-muted">
+          Trained policy (imitation learning + DAgger) running the full task in simulation (MuJoCo / robosuite): approach, grasp,
+          unscrew about 14 rad and lift the bolt. Shown at 2x speed.
+        </figcaption>
+      </figure>
+
       <Links p={p} />
       <RoboticsGallery />
     </article>

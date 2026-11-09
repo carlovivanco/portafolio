@@ -11,7 +11,7 @@ const education = [
     highlights: [
       'Intelligent Systems & Robotics (Fuzzy Logic), Deep Learning & Neural Networks, Machine Learning, Computer Vision.',
       'Electronic Design, Embedded Systems with RTOS, Microcontrollers — UART, SPI, I2C, Ethernet.',
-      'Dissertation: Deep RL control for autonomous robotic manipulation — Isaac Lab, 15M training steps, deployed on a real Franka Emika arm.',
+      'Dissertation: Imitation learning + deep RL control for autonomous robotic manipulation — Isaac Lab, 15M training steps, deployed on a real Franka Emika arm.',
     ],
     tags: ['ROS / ROS2', 'Deep RL', 'Computer Vision', 'RTOS', 'Embedded', 'Fuzzy Logic', 'PyTorch'],
   },

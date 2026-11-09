@@ -10,7 +10,7 @@ import { loadCurves } from '@/lib/curves'
 import { site } from '@/lib/site'
 
 export const metadata: Metadata = {
-  title: 'Deep RL for Robotic Manipulation — Carlo Vivanco',
+  title: 'Imitation Learning + Deep RL for Robotic Manipulation — Carlo Vivanco',
   description: 'MSc dissertation: an RL policy trained in Isaac Lab (15M steps) unscrews a bolt on a real Franka Emika Panda.',
 }
 
@@ -34,7 +34,7 @@ export default function Thesis() {
       <Link href="/" className="link text-sm">← Portfolio</Link>
 
       <header className="mt-8 text-center">
-        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Deep RL for Robotic Manipulation</h1>
+        <h1 className="text-3xl md:text-5xl font-semibold tracking-tight">Imitation Learning + Deep RL for Robotic Manipulation</h1>
         <p className="mt-4 text-muted">Carlo Felipe Vivanco Coronado · University of Essex · MSc Intelligent Systems & Robotics</p>
         <ul className="mt-6 flex flex-wrap justify-center gap-3">
           <li><a className="btn btn-primary" href={site.thesisRepo} target="_blank" rel="noopener noreferrer">Code ↗</a></li>
